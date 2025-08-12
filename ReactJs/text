@@ -1,0 +1,2709 @@
+# React Interview Questions and Answers (Organized by Topic)
+
+## 1. React Core Concepts
+
+1. **What is React?**
+
+   - React is a JavaScript library for building user interfaces, developed by Facebook. It allows developers to create reusable UI components.
+
+   ```jsx
+   // Example: A simple React component
+   function HelloWorld() {
+     return <h1>Hello, World!</h1>;
+   }
+   ```
+
+2. **What is a component in React?**
+
+   - A component is a reusable piece of UI that can have its own state and props. Components can be functional or class-based.
+
+   ```jsx
+   // Functional component
+   function Button(props) {
+     return <button>{props.label}</button>;
+   }
+
+   // Class component
+   class ButtonClass extends React.Component {
+     render() {
+       return <button>{this.props.label}</button>;
+     }
+   }
+   ```
+
+3. **What are props in React?**
+
+   - Props (short for properties) are read-only inputs passed from parent to child components.
+
+   ```jsx
+   function Welcome(props) {
+     return <h1>Hello, {props.name}</h1>;
+   }
+   // Usage: <Welcome name="Alice" />
+   ```
+
+4. **What is state in React?**
+
+   - State is a built-in object that stores property values that belong to a component. When state changes, the component re-renders.
+
+   ```jsx
+   import { useState } from "react";
+   function Counter() {
+     const [count, setCount] = useState(0);
+     return (
+       <div>
+         <p>Count: {count}</p>
+         <button onClick={() => setCount(count + 1)}>Increment</button>
+       </div>
+     );
+   }
+   ```
+
+5. **What is JSX?**
+
+   - JSX stands for JavaScript XML. It allows you to write HTML in React.
+
+   ```jsx
+   const element = <h1>Hello, JSX!</h1>;
+   ```
+
+6. **How do you create a React app?**
+
+   - You can use Create React App by running `npx create-react-app my-app`.
+
+7. **What is the virtual DOM?**
+
+   - The virtual DOM is a lightweight copy of the real DOM. React uses it to optimize UI updates.
+
+8. **What is the difference between state and props?**
+
+   - State is managed within the component, while props are passed to the component.
+
+9. **What are hooks in React?**
+
+   - Hooks are functions that let you use state and other React features in functional components.
+
+10. **What is useState?**
+
+    - useState is a React hook that lets you add state to functional components.
+
+    ```jsx
+    import { useState } from "react";
+    function Example() {
+      const [value, setValue] = useState("");
+      return <input value={value} onChange={(e) => setValue(e.target.value)} />;
+    }
+    ```
+
+11. **What is useEffect?**
+
+    - useEffect is a hook for performing side effects in functional components, such as data fetching or subscriptions.
+
+    ```jsx
+    import { useEffect, useState } from "react";
+    function DataFetcher() {
+      const [data, setData] = useState(null);
+      useEffect(() => {
+        fetch("/api/data")
+          .then((res) => res.json())
+          .then(setData);
+      }, []);
+      return <div>{data ? data.value : "Loading..."}</div>;
+    }
+    ```
+
+12. **What is a higher-order component (HOC)?**
+
+    - An HOC is a function that takes a component and returns a new component, often used for code reuse.
+
+    ```jsx
+    function withLogger(WrappedComponent) {
+      return function (props) {
+        console.log("Props:", props);
+        return <WrappedComponent {...props} />;
+      };
+    }
+    ```
+
+13. **What is Redux?**
+
+    - Redux is a state management library for JavaScript apps, often used with React.
+
+    ```js
+    // Example Redux reducer
+    function counterReducer(state = 0, action) {
+      switch (action.type) {
+        case "INCREMENT":
+          return state + 1;
+        default:
+          return state;
+      }
+    }
+    ```
+
+14. **What is the difference between controlled and uncontrolled components?**
+
+    - Controlled components have their state managed by React, while uncontrolled components store their own state in the DOM.
+
+    ```jsx
+    // Controlled
+    function ControlledInput() {
+      const [value, setValue] = useState("");
+      return <input value={value} onChange={(e) => setValue(e.target.value)} />;
+    }
+
+    // Uncontrolled
+    function UncontrolledInput() {
+      const inputRef = useRef();
+      return <input ref={inputRef} />;
+    }
+    ```
+
+15. **What is context in React?**
+
+    - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+    ```jsx
+    const ThemeContext = React.createContext("light");
+    function ThemedButton() {
+      const theme = useContext(ThemeContext);
+      return <button className={theme}>Button</button>;
+    }
+    ```
+
+16. **What is prop drilling?**
+
+    - Prop drilling is the process of passing data from parent to child components through props, often through many layers.
+
+17. **What is React Router?**
+
+    - React Router is a library for routing in React applications, allowing navigation between different components.
+
+    ```jsx
+    import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+    function App() {
+      return (
+        <BrowserRouter>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+          </nav>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+    ```
+
+18. **What is lazy loading in React?**
+
+    - Lazy loading is a technique to load components only when they are needed, improving performance.
+
+    ```jsx
+    import React, { Suspense, lazy } from "react";
+    const LazyComponent = lazy(() => import("./LazyComponent"));
+    function App() {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <LazyComponent />
+        </Suspense>
+      );
+    }
+    ```
+
+19. **What is memoization in React?**
+
+    - Memoization is an optimization technique to cache the result of expensive function calls. React provides React.memo and useMemo for this purpose.
+
+    ```jsx
+    import { useMemo } from "react";
+    function ExpensiveComponent({ value }) {
+      const computed = useMemo(() => expensiveCalculation(value), [value]);
+      return <div>{computed}</div>;
+    }
+    ```
+
+20. **What is the useRef hook?**
+
+    - useRef is a hook that returns a mutable ref object, which can persist values across renders and access DOM elements directly.
+
+    ```jsx
+    import { useRef } from "react";
+    function FocusInput() {
+      const inputRef = useRef();
+      return (
+        <>
+          <input ref={inputRef} />
+          <button onClick={() => inputRef.current.focus()}>Focus</button>
+        </>
+      );
+    }
+    ```
+
+21. **What is the difference between useEffect and useLayoutEffect?**
+
+    - useEffect runs after the render is committed to the screen, while useLayoutEffect runs synchronously after all DOM mutations but before the browser paints.
+
+22. **What is reconciliation in React?**
+
+    - Reconciliation is the process by which React updates the DOM with changes to the virtual DOM.
+
+23. **What is a key prop and why is it important?**
+
+    - The key prop helps React identify which items have changed, are added, or are removed in a list.
+
+    ```jsx
+    const items = ["A", "B", "C"];
+    return (
+      <ul>
+        {items.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+    );
+    ```
+
+24. **What is the difference between class and functional components?**
+
+    - Class components use ES6 classes and can have lifecycle methods, while functional components are plain functions and use hooks for state and lifecycle.
+
+25. **What are lifecycle methods in React?**
+
+    - Lifecycle methods are special methods in class components that run at different stages of a component's life, such as componentDidMount, componentDidUpdate, and componentWillUnmount.
+
+    ```jsx
+    class MyComponent extends React.Component {
+      componentDidMount() {
+        // Called after the component is mounted
+      }
+      componentDidUpdate() {
+        // Called after the component updates
+      }
+      componentWillUnmount() {
+        // Called before the component is removed
+      }
+      render() {
+        return <div>Hello</div>;
+      }
+    }
+    ```
+
+26. **What is the useCallback hook?**
+
+    - useCallback returns a memoized callback function, preventing unnecessary re-renders.
+
+    ```jsx
+    import { useCallback, useState } from "react";
+    function Counter() {
+      const [count, setCount] = useState(0);
+      const increment = useCallback(() => setCount((c) => c + 1), []);
+      return <button onClick={increment}>{count}</button>;
+    }
+    ```
+
+27. **What is the useMemo hook?**
+
+    - useMemo returns a memoized value, optimizing performance by avoiding expensive calculations on every render.
+
+28. **What is server-side rendering (SSR)?**
+
+    - SSR is the process of rendering React components on the server and sending the HTML to the client, improving performance and SEO.
+
+29. **What is hydration in React?**
+
+    - Hydration is the process of attaching event listeners to server-rendered HTML on the client side.
+
+30. **What is React Portals?**
+
+    - Portals provide a way to render children into a DOM node outside the parent component's hierarchy.
+
+    ```jsx
+    import ReactDOM from "react-dom";
+    function Modal({ children }) {
+      return ReactDOM.createPortal(
+        children,
+        document.getElementById("modal-root")
+      );
+    }
+    ```
+
+31. **What is error boundary in React?**
+
+    - Error boundaries are React components that catch JavaScript errors in their child component tree and display a fallback UI.
+
+    ```jsx
+    class ErrorBoundary extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { hasError: false };
+      }
+      static getDerivedStateFromError() {
+        return { hasError: true };
+      }
+      componentDidCatch(error, info) {
+        // Log error
+      }
+      render() {
+        if (this.state.hasError) {
+          return <h1>Something went wrong.</h1>;
+        }
+        return this.props.children;
+      }
+    }
+    ```
+
+32. **What is the difference between React and Angular?**
+
+    - React is a library focused on UI, while Angular is a full-fledged framework. React uses a virtual DOM, Angular uses real DOM and two-way data binding.
+
+33. **What is the useImperativeHandle hook?**
+
+    - useImperativeHandle customizes the instance value that is exposed to parent components when using ref.
+
+    ```jsx
+    import { useRef, forwardRef, useImperativeHandle } from "react";
+    const FancyInput = forwardRef((props, ref) => {
+      const inputRef = useRef();
+      useImperativeHandle(ref, () => ({
+        focus: () => inputRef.current.focus()
+      }));
+      return <input ref={inputRef} />;
+    });
+    ```
+
+34. **What is React Fragment?**
+
+    - React Fragment lets you group a list of children without adding extra nodes to the DOM.
+
+    ```jsx
+    return (
+      <>
+        <td>Cell 1</td>
+        <td>Cell 2</td>
+      </>
+    );
+    ```
+
+35. **What is the difference between useReducer and useState?**
+
+    - useReducer is used for more complex state logic, while useState is used for simple state management.
+
+    ```jsx
+    import { useReducer } from "react";
+    function reducer(state, action) {
+      switch (action.type) {
+        case "increment":
+          return { count: state.count + 1 };
+        default:
+          return state;
+      }
+    }
+    function Counter() {
+      const [state, dispatch] = useReducer(reducer, { count: 0 });
+      return (
+        <button onClick={() => dispatch({ type: "increment" })}>
+          {state.count}
+        </button>
+      );
+    }
+    ```
+
+36. **What is the StrictMode component?**
+
+    - StrictMode is a tool for highlighting potential problems in an application, such as unsafe lifecycle methods.
+
+37. **What is the difference between mounting and unmounting?**
+
+    - Mounting is when a component is inserted into the DOM, unmounting is when it is removed.
+
+38. **What is the difference between shallow rendering and full rendering in testing?**
+
+    - Shallow rendering tests a component in isolation, while full rendering tests the component and its children.
+
+39. **What is the use of PropTypes?**
+
+    - PropTypes is a type-checking library for React props.
+
+40. **What is the difference between default export and named export?**
+
+    - Default export exports a single value, named export can export multiple values.
+
+41. **What is the use of React.StrictMode?**
+
+    - React.StrictMode helps find potential problems in an application by activating additional checks and warnings.
+
+42. **What is the difference between useEffect and componentDidMount?**
+
+    - useEffect can run after every render, while componentDidMount runs only once after the initial render in class components.
+
+43. **What is the use of React.Children?**
+
+    - React.Children provides utilities for dealing with the this.props.children prop.
+
+44. **What is the use of React.cloneElement?**
+
+    - React.cloneElement is used to clone and return a new React element using the element as the starting point.
+
+45. **What is the use of React.createRef?**
+
+    - React.createRef is used to create a ref to access a DOM element or a class component instance.
+
+46. **What is the difference between useRef and createRef?**
+
+    - useRef is used in functional components and persists for the component's lifetime, createRef is used in class components and creates a new ref on every render.
+
+47. **What is the use of forwardRef?**
+
+    - forwardRef is used to pass a ref through a component to one of its children.
+
+48. **What is the use of React.lazy?**
+
+    - React.lazy is used for code-splitting and lazy loading components.
+
+49. **What is suspense in React?**
+
+    - Suspense lets you display a fallback while waiting for some code to load or data to fetch.
+
+50. **What is the difference between useContext and contextType?**
+
+    - useContext is a hook for functional components, contextType is used in class components.
+
+51. **What is the use of shouldComponentUpdate?**
+
+    - shouldComponentUpdate is a lifecycle method that lets you control whether a component should re-render.
+
+52. **What is the difference between PureComponent and Component?**
+
+    - PureComponent implements shouldComponentUpdate with a shallow prop and state comparison, Component does not.
+
+53. **What is the use of getDerivedStateFromProps?**
+
+    - getDerivedStateFromProps is a static lifecycle method that updates the state in response to prop changes.
+
+54. **What is the use of getSnapshotBeforeUpdate?**
+
+    - getSnapshotBeforeUpdate is a lifecycle method that enables your component to capture current values before they are changed.
+
+55. **What is the use of UNSAFE\_ lifecycle methods?**
+
+    - UNSAFE\_ methods are legacy lifecycle methods that are not recommended for use in new code.
+
+56. **What is the use of ReactDOM?**
+
+    - ReactDOM provides DOM-specific methods that can be used at the top level of your app.
+
+57. **What is the use of ReactDOMServer?**
+
+    - ReactDOMServer enables you to render components to static markup for server-side rendering.
+
+58. **What is the use of ReactDOM.hydrate?**
+
+    - ReactDOM.hydrate is used to hydrate a container whose HTML contents were rendered by ReactDOMServer.
+
+59. **What is the use of ReactDOM.createPortal?**
+
+    - ReactDOM.createPortal is used to render children into a DOM node outside the parent component hierarchy.
+
+60. **What is the use of ReactDOM.findDOMNode?**
+
+    - ReactDOM.findDOMNode is used to get the underlying DOM node of a component instance.
+
+61. **What is the use of ReactDOM.unmountComponentAtNode?**
+
+    - ReactDOM.unmountComponentAtNode is used to unmount a React component from the DOM.
+
+62. **What is the use of ReactDOM.render?**
+
+    - ReactDOM.render is used to render a React element into the DOM.
+
+63. **What is the use of ReactDOM.flushSync?**
+
+    - ReactDOM.flushSync is used to flush all pending updates synchronously.
+
+64. **What is the use of ReactDOM.createRoot?**
+
+    - ReactDOM.createRoot is used to create a root to enable the new concurrent features in React 18.
+
+65. **What is the use of ReactDOMClient?**
+
+    - ReactDOMClient is the new client entry point for React 18 concurrent features.
+
+66. **What is the use of React Profiler?**
+
+    - The React Profiler is a tool for measuring the performance of React applications.
+
+67. **What is the use of React DevTools?**
+
+    - React DevTools is a browser extension for inspecting the React component tree.
+
+68. **What is the use of React Testing Library?**
+
+    - React Testing Library is a library for testing React components by simulating user interactions.
+
+69. **What is the use of Enzyme?**
+
+    - Enzyme is a JavaScript testing utility for React that makes it easier to test your React Components' output.
+
+70. **What is the use of Jest?**
+
+    - Jest is a JavaScript testing framework used by React for unit and integration testing.
+
+71. **What is the use of Storybook?**
+
+    - Storybook is a tool for developing and testing UI components in isolation.
+
+72. **What is the use of Next.js?**
+
+    - Next.js is a React framework for server-side rendering, static site generation, and more.
+
+73. **What is the use of Gatsby?**
+
+    - Gatsby is a React-based framework for building fast static websites.
+
+74. **What is the use of React Native?**
+
+    - React Native is a framework for building native mobile apps using React.
+
+75. **What is the use of Expo?**
+
+    - Expo is a framework and platform for universal React applications, especially React Native.
+
+76. **What is the use of React Spring?**
+
+    - React Spring is a library for creating animations in React.
+
+77. **What is the use of Framer Motion?**
+
+    - Framer Motion is a production-ready motion library for React.
+
+78. **What is the use of React Helmet?**
+
+    - React Helmet is a library for managing changes to the document head.
+
+79. **What is the use of React Intl?**
+
+    - React Intl is a library for internationalization in React applications.
+
+80. **What is the use of React i18next?**
+
+    - React i18next is a powerful internationalization framework for React.
+
+81. **What is the use of React Hook Form?**
+
+    - React Hook Form is a library for managing forms in React using hooks.
+
+82. **What is the use of Formik?**
+
+    - Formik is a library for building forms in React.
+
+83. **What is the use of Yup?**
+
+    - Yup is a JavaScript schema builder for value parsing and validation, often used with Formik or React Hook Form.
+
+84. **What is the use of React Query?**
+
+    - React Query is a library for fetching, caching, and updating data in React applications.
+
+85. **What is the use of SWR?**
+
+    - SWR is a React Hooks library for data fetching.
+
+86. **What is the use of Axios?**
+
+    - Axios is a promise-based HTTP client for making requests from the browser or Node.js.
+
+87. **What is the use of Fetch API?**
+
+    - Fetch API is a native browser API for making HTTP requests.
+
+88. **What is the use of useSWR?**
+
+    - useSWR is a React hook for data fetching, caching, and revalidation.
+
+89. **What is the use of useQuery?**
+
+    - useQuery is a hook from React Query for fetching and caching data.
+
+90. **What is the use of useMutation?**
+
+    - useMutation is a hook from React Query for creating, updating, or deleting data.
+
+91. **What is the use of useForm?**
+
+    - useForm is a hook from React Hook Form for managing form state and validation.
+
+92. **What is the use of useFieldArray?**
+
+    - useFieldArray is a hook from React Hook Form for managing dynamic fields in a form.
+
+93. **What is the use of useWatch?**
+
+    - useWatch is a hook from React Hook Form for watching form values.
+
+94. **What is the use of useController?**
+
+    - useController is a hook from React Hook Form for managing controlled components.
+
+95. **What is the use of useFormContext?**
+
+    - useFormContext is a hook from React Hook Form for sharing form context across components.
+
+96. **What is the use of useDropzone?**
+
+    - useDropzone is a hook from react-dropzone for handling file uploads.
+
+97. **What is the use of useDrag and useDrop?**
+
+    - useDrag and useDrop are hooks from react-dnd for implementing drag-and-drop functionality.
+
+98. **What is the use of useInfiniteQuery?**
+
+    - useInfiniteQuery is a hook from React Query for infinite scrolling data fetching.
+
+99. **What is the use of useIntersectionObserver?**
+
+    - useIntersectionObserver is a hook for observing when an element enters or leaves the viewport.
+
+100. **What is the use of useMediaQuery?**
+     - useMediaQuery is a hook for responding to CSS media query changes in React.
+
+---
+
+**Advanced & Real-World React Interview Questions and Answers (Scenarios & Best Practices)**
+
+101. **How would you implement authentication and authorization in a React app?**
+
+
+    - Use libraries like Firebase Auth, Auth0, or implement JWT-based authentication. Protect routes using higher-order components or hooks, and store tokens securely (preferably in memory or HttpOnly cookies).
+
+102. **How do you handle global state in a large React application?**
+
+
+    - Use Context API for simple cases, or state management libraries like Redux, MobX, or Zustand for complex state. Use selectors and middleware for scalability.
+
+103. **How would you optimize a React app for performance?**
+
+
+    - Use React.memo, useCallback, useMemo, code splitting, lazy loading, virtualization (react-window), and avoid unnecessary re-renders.
+
+104. **How do you implement role-based access control (RBAC) in React?**
+
+
+    - Store user roles in state/context. Render UI and routes conditionally based on roles. Use custom hooks or HOCs to check permissions.
+
+105. **How do you handle form validation in React?**
+
+
+    - Use libraries like Formik or React Hook Form with Yup for schema validation. Show error messages and disable submit until valid.
+
+106. **How do you fetch and cache data in React?**
+
+
+    - Use React Query, SWR, or Redux Toolkit Query for fetching, caching, and updating server data efficiently.
+
+107. **How do you implement infinite scrolling in a React list?**
+
+
+    - Use Intersection Observer API or libraries like react-infinite-scroll-component to load more data as the user scrolls.
+
+108. **How do you handle file uploads in React?**
+
+
+    - Use input type="file" or libraries like react-dropzone. Send files to the server using FormData and handle progress with Axios or Fetch API.
+
+109. **How do you implement dark mode in a React app?**
+
+
+    - Store theme preference in state/context or localStorage. Use CSS variables or styled-components to switch themes dynamically.
+
+110. **How do you secure sensitive data in a React app?**
+
+
+    - Never store sensitive data in the frontend. Use environment variables, secure APIs, and HttpOnly cookies for tokens.
+
+111. **How do you handle error boundaries in React?**
+
+
+    - Create a class component with componentDidCatch and getDerivedStateFromError to catch and display fallback UI for errors.
+
+112. **How do you implement a custom hook for data fetching?**
+
+
+    - Create a function that uses useState and useEffect to fetch data and return loading, error, and data states.
+
+113. **How do you debounce input in React?**
+
+
+    - Use useEffect with setTimeout, or use lodash.debounce to delay function execution until the user stops typing.
+
+114. **How do you throttle events in React?**
+
+
+    - Use lodash.throttle or a custom implementation to limit the frequency of event handler execution.
+
+115. **How do you implement drag-and-drop functionality?**
+
+
+    - Use react-dnd or react-beautiful-dnd for complex drag-and-drop UIs.
+
+116. **How do you handle responsive design in React?**
+
+
+    - Use CSS media queries, styled-components, or libraries like Material-UI's useMediaQuery hook.
+
+117. **How do you implement a modal dialog in React?**
+
+
+    - Use React Portals to render modals outside the main DOM hierarchy. Manage open/close state in the parent component.
+
+118. **How do you implement a notification system in React?**
+
+
+    - Use context or Redux to manage notifications. Render notification components conditionally and auto-dismiss after a timeout.
+
+119. **How do you handle optimistic UI updates?**
+
+
+    - Update the UI immediately before the server responds, then roll back if the request fails. Libraries like React Query support this pattern.
+
+120. **How do you implement pagination in a React table?**
+
+
+    - Fetch paginated data from the server or paginate client-side data. Use state to track the current page and render only visible rows.
+
+121. **How do you test React components?**
+
+
+    - Use React Testing Library and Jest for unit and integration tests. Test user interactions and component output.
+
+122. **How do you mock API calls in tests?**
+
+
+    - Use jest.mock, msw (Mock Service Worker), or sinon to mock API responses.
+
+123. **How do you implement a search filter in a React list?**
+
+
+    - Use useState to store the search term and filter the list based on the input value.
+
+124. **How do you handle accessibility (a11y) in React apps?**
+
+
+    - Use semantic HTML, ARIA attributes, keyboard navigation, and test with screen readers.
+
+125. **How do you implement a multi-step form in React?**
+
+
+    - Use state to track the current step and conditionally render form sections. Validate each step before proceeding.
+
+126. **How do you share code between React components?**
+
+
+    - Use custom hooks, higher-order components, or render props for code reuse.
+
+127. **How do you handle deep linking in a React SPA?**
+
+
+    - Use React Router to map URLs to components and support direct navigation to specific views.
+
+128. **How do you implement a protected route in React Router?**
+
+
+    - Create a wrapper component that checks authentication and redirects if the user is not logged in.
+
+129. **How do you handle browser history in React?**
+
+
+    - Use the useHistory or useNavigate hook from React Router to programmatically navigate.
+
+130. **How do you implement a custom context provider?**
+
+
+    - Create a context with React.createContext, provide state and functions, and wrap your app with the provider.
+
+131. **How do you handle race conditions in async requests?**
+
+
+    - Use AbortController to cancel previous requests or track the latest request with a ref.
+
+132. **How do you implement a skeleton loader?**
+
+
+    - Render placeholder UI while data is loading, then replace with actual content.
+
+133. **How do you handle large lists efficiently?**
+
+
+    - Use windowing/virtualization libraries like react-window or react-virtualized to render only visible items.
+
+134. **How do you implement a custom error handler for API calls?**
+
+
+    - Create a utility function or hook to catch and handle errors, display messages, and log errors as needed.
+
+135. **How do you implement a theme switcher in React?**
+
+
+    - Store the theme in context or state, and use CSS variables or styled-components to apply styles.
+
+136. **How do you persist state in localStorage or sessionStorage?**
+
+
+    - Use useEffect to sync state with storage, and initialize state from storage on mount.
+
+137. **How do you handle timeouts and retries for API calls?**
+
+
+    - Use libraries like axios-retry or implement retry logic with setTimeout and catch blocks.
+
+138. **How do you implement a wizard-style navigation?**
+
+
+    - Use state to track the current step, validate each step, and allow navigation between steps.
+
+139. **How do you handle user preferences in a React app?**
+
+
+    - Store preferences in context, Redux, or localStorage, and apply them throughout the app.
+
+140. **How do you implement a tabbed interface in React?**
+
+
+    - Use state to track the active tab and conditionally render tab content.
+
+141. **How do you handle API rate limiting in React?**
+
+
+    - Implement throttling/debouncing, exponential backoff, and show user-friendly error messages when limits are reached.
+
+142. **How do you implement a custom dropdown component?**
+
+
+    - Use state to manage open/close, handle keyboard navigation, and render options dynamically.
+
+143. **How do you handle cross-site scripting (XSS) in React?**
+
+
+    - Avoid dangerouslySetInnerHTML, sanitize user input, and use libraries like DOMPurify.
+
+144. **How do you implement a breadcrumb navigation?**
+
+
+    - Use React Router location and a mapping of routes to labels to render breadcrumbs.
+
+145. **How do you handle internationalization (i18n) in React?**
+
+
+    - Use libraries like react-i18next or react-intl to manage translations and locale switching.
+
+146. **How do you implement a confirmation dialog before deleting an item?**
+
+
+    - Show a modal dialog and require user confirmation before proceeding with the delete action.
+
+147. **How do you handle push notifications in a React app?**
+
+
+    - Use the Web Push API or service workers, and request user permission before subscribing.
+
+148. **How do you implement a progress bar for file uploads?**
+
+
+    - Track upload progress with Axios or Fetch and update a progress bar component.
+
+149. **How do you handle session expiration in React?**
+
+
+    - Track token expiry, show a warning, and redirect to login when the session expires.
+
+150. **How do you implement a print feature in React?**
+
+
+    - Use window.print() or libraries like react-to-print to print specific components.
+
+151. **How do you handle dynamic imports in React?**
+
+
+    - Use React.lazy and Suspense to load components only when needed.
+
+152. **How do you implement a sticky header or footer?**
+
+
+    - Use CSS position: sticky or fixed, and manage layout with React state if needed.
+
+153. **How do you handle user inactivity and auto-logout?**
+
+
+    - Track user activity with event listeners, and log out after a period of inactivity.
+
+154. **How do you implement a custom scrollbar in React?**
+
+
+    - Use CSS for simple cases or libraries like react-custom-scrollbars for advanced features.
+
+155. **How do you handle deep object updates in state?**
+
+
+    - Use the spread operator or libraries like immer to immutably update nested state.
+
+156. **How do you implement a responsive navigation drawer?**
+
+
+    - Use state to toggle the drawer, and CSS media queries for responsiveness.
+
+157. **How do you handle concurrent API requests?**
+
+
+    - Use Promise.all to run requests in parallel and handle responses together.
+
+158. **How do you implement a custom tooltip in React?**
+
+
+    - Use state to show/hide the tooltip, and position it relative to the target element.
+
+159. **How do you handle keyboard shortcuts in React?**
+
+
+    - Add event listeners for keydown events and trigger actions based on key combinations.
+
+160. **How do you implement a collapsible/accordion component?**
+
+
+    - Use state to track open/closed panels and render content conditionally.
+
+161. **How do you handle API versioning in a React app?**
+
+
+    - Use environment variables or configuration files to switch API endpoints based on version.
+
+162. **How do you implement a custom pagination hook?**
+
+
+    - Create a hook that manages current page, page size, and provides functions to navigate pages.
+
+163. **How do you handle browser compatibility issues in React?**
+
+
+    - Use polyfills, Babel, and test in multiple browsers to ensure compatibility.
+
+164. **How do you implement a custom date picker?**
+
+
+    - Use state to manage selected date, and render a calendar UI. Use libraries like react-datepicker for advanced features.
+
+165. **How do you handle CORS issues in React?**
+
+
+    - Configure the backend to allow cross-origin requests, or use a proxy during development.
+
+166. **How do you implement a custom hook for window size?**
+
+
+    - Use useState and useEffect to listen for resize events and return the current window size.
+
+167. **How do you handle scroll restoration in React Router?**
+
+
+    - Use the useEffect hook to scroll to the top or restore scroll position on route change.
+
+168. **How do you implement a custom hook for debounced value?**
+
+
+    - Create a hook that returns a debounced version of a value using useEffect and setTimeout.
+
+169. **How do you handle environment variables in React?**
+
+
+    - Use .env files and process.env to access environment variables in your app.
+
+170. **How do you implement a custom hook for previous value?**
+
+
+    - Use useRef to store the previous value and update it in useEffect.
+
+171. **How do you handle service workers in React?**
+
+
+    - Register service workers for offline support and caching using create-react-app or custom scripts.
+
+172. **How do you implement a custom hook for event listeners?**
+
+
+    - Create a hook that adds and removes event listeners using useEffect.
+
+173. **How do you handle API errors globally?**
+
+
+    - Use an error boundary or a global error handler in context or Redux middleware.
+
+174. **How do you implement a custom hook for geolocation?**
+
+
+    - Use the Geolocation API in a hook to provide location data to components.
+
+175. **How do you handle real-time data in React?**
+
+
+    - Use WebSockets, Socket.IO, or polling to fetch and update data in real time.
+
+176. **How do you implement a custom hook for intervals?**
+
+
+    - Create a hook that sets up and clears intervals using useEffect.
+
+177. **How do you handle user onboarding in a React app?**
+
+
+    - Show guided tours, tooltips, or modals to introduce features to new users.
+
+178. **How do you implement a custom hook for localStorage?**
+
+
+    - Create a hook that reads and writes values to localStorage and syncs with state.
+
+179. **How do you handle feature flags in React?**
+
+
+    - Use context or a feature flag service to enable/disable features dynamically.
+
+180. **How do you implement a custom hook for API polling?**
+
+
+    - Use setInterval in a hook to fetch data at regular intervals and clear on unmount.
+
+181. **How do you handle user avatars and image uploads?**
+
+
+    - Use file input, preview images with FileReader, and upload to the server or cloud storage.
+
+182. **How do you implement a custom hook for online/offline status?**
+
+
+    - Use the navigator.onLine property and window event listeners to track connectivity.
+
+183. **How do you handle multi-language support in forms?**
+
+
+    - Use translation libraries and provide translated labels, placeholders, and validation messages.
+
+184. **How do you implement a custom hook for scroll position?**
+
+
+    - Use useState and useEffect to track and return the current scroll position.
+
+185. **How do you handle user consent for cookies?**
+
+
+    - Show a consent banner and store the user's choice in localStorage or cookies.
+
+186. **How do you implement a custom hook for clipboard operations?**
+
+
+    - Use the Clipboard API to copy and paste data from the clipboard.
+
+187. **How do you handle dynamic theming in React?**
+
+
+    - Use CSS variables, context, or styled-components to switch themes at runtime.
+
+188. **How do you implement a custom hook for detecting clicks outside an element?**
+
+
+    - Use useRef and event listeners to detect and handle outside clicks.
+
+189. **How do you handle user profile management in React?**
+
+
+    - Store user data in context or Redux, provide forms for editing, and sync with the backend.
+
+190. **How do you implement a custom hook for detecting device type?**
+
+
+    - Use user agent or window size to determine device type and return it from a hook.
+
+191. **How do you handle push state and pop state in React Router?**
+
+
+    - Use the history API or React Router hooks to manage navigation state.
+
+192. **How do you implement a custom hook for detecting element visibility?**
+
+
+    - Use the Intersection Observer API in a hook to track if an element is visible in the viewport.
+
+193. **How do you handle user notifications and toasts?**
+
+
+    - Use libraries like react-toastify or build a custom notification system with context.
+
+194. **How do you implement a custom hook for detecting window focus/blur?**
+
+
+    - Use event listeners for focus and blur events in a hook to track window state.
+
+195. **How do you handle user session management in React?**
+
+
+    - Store session data in context, Redux, or cookies, and handle login/logout flows securely.
+
+196. **How do you implement a custom hook for detecting network speed?**
+
+
+    - Use the Network Information API to get connection details and return from a hook.
+
+197. **How do you handle user permissions and feature access?**
+
+
+    - Store permissions in state/context and conditionally render features based on permissions.
+
+198. **How do you implement a custom hook for detecting color scheme?**
+
+
+    - Use the window.matchMedia API to detect dark/light mode and return from a hook.
+
+199. **How do you handle user analytics and tracking in React?**
+
+
+    - Integrate analytics tools (Google Analytics, Segment) and track events with custom hooks or context.
+
+200. **How do you implement a custom hook for detecting battery status?**
+
+
+    - Use the Battery Status API to get battery info and return from a hook.
+
+---
+
+## 2. React Hooks
+
+201. **What is a custom hook in React? How do you create one?**
+
+
+    - A custom hook is a reusable function that starts with 'use' and can call other hooks. It allows you to extract and share logic between components.
+
+    ```jsx
+    import { useState, useEffect } from "react";
+    function useWindowWidth() {
+      const [width, setWidth] = useState(window.innerWidth);
+      useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }, []);
+      return width;
+    }
+    // Usage: const width = useWindowWidth();
+    ```
+
+202. **How does the useEffect hook work? Give an example of cleanup.**
+
+
+    - useEffect runs side effects after rendering. You can return a cleanup function to run when the component unmounts or before the effect runs again.
+
+    ```jsx
+    import { useEffect } from "react";
+    function Timer() {
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log("tick");
+        }, 1000);
+        return () => clearInterval(id); // Cleanup
+      }, []);
+      return <div>Timer running...</div>;
+    }
+    ```
+
+203. **How do you use the useContext hook?**
+
+
+    - useContext lets you access the value of a React context in a functional component.
+
+    ```jsx
+    import React, { useContext } from "react";
+    const UserContext = React.createContext();
+    function Profile() {
+      const user = useContext(UserContext);
+      return <div>Hello, {user.name}</div>;
+    }
+    ```
+
+204. **How do you use the useReducer hook?**
+
+
+    - useReducer is used for complex state logic. It takes a reducer function and an initial state.
+
+    ```jsx
+    import { useReducer } from "react";
+    function reducer(state, action) {
+      switch (action.type) {
+        case "increment":
+          return { count: state.count + 1 };
+        default:
+          return state;
+      }
+    }
+    function Counter() {
+      const [state, dispatch] = useReducer(reducer, { count: 0 });
+      return (
+        <button onClick={() => dispatch({ type: "increment" })}>
+          {state.count}
+        </button>
+      );
+    }
+    ```
+
+205. **How do you use the useRef hook for storing mutable values?**
+
+
+    - useRef can store any mutable value that persists across renders, not just DOM nodes.
+
+    ```jsx
+    import { useRef } from "react";
+    function Stopwatch() {
+      const intervalRef = useRef();
+      // ... use intervalRef.current to store interval id
+    }
+    ```
+
+206. **How do you use the useCallback hook?**
+
+
+    - useCallback returns a memoized version of a callback function that only changes if its dependencies change.
+
+    ```jsx
+    import { useCallback, useState } from "react";
+    function ExpensiveButton({ onClick }) {
+      return <button onClick={onClick}>Click me</button>;
+    }
+    function Parent() {
+      const [count, setCount] = useState(0);
+      const handleClick = useCallback(() => setCount((c) => c + 1), []);
+      return <ExpensiveButton onClick={handleClick} />;
+    }
+    ```
+
+207. **How do you use the useMemo hook?**
+
+
+    - useMemo returns a memoized value, recalculating only when dependencies change.
+
+    ```jsx
+    import { useMemo } from "react";
+    function Fibonacci({ n }) {
+      const fib = useMemo(() => {
+        function calc(x) {
+          return x <= 1 ? x : calc(x - 1) + calc(x - 2);
+        }
+        return calc(n);
+      }, [n]);
+      return <div>{fib}</div>;
+    }
+    ```
+
+208. **How do you use the useImperativeHandle hook?**
+
+
+    - useImperativeHandle customizes the instance value exposed to parent components when using ref with forwardRef.
+
+    ```jsx
+    import { useRef, forwardRef, useImperativeHandle } from "react";
+    const Input = forwardRef((props, ref) => {
+      const inputRef = useRef();
+      useImperativeHandle(ref, () => ({
+        focus: () => inputRef.current.focus(),
+      }));
+      return <input ref={inputRef} />;
+    });
+    ```
+
+209. **How do you use the useLayoutEffect hook?**
+
+
+    - useLayoutEffect is like useEffect, but it fires synchronously after all DOM mutations. Useful for reading layout and synchronously re-rendering.
+
+    ```jsx
+    import { useLayoutEffect, useRef } from "react";
+    function LayoutExample() {
+      const divRef = useRef();
+      useLayoutEffect(() => {
+        console.log(divRef.current.getBoundingClientRect());
+      }, []);
+      return <div ref={divRef}>Measure me</div>;
+    }
+    ```
+
+210. **How do you use the useDebugValue hook?**
+
+
+    - useDebugValue can be used to display a label for custom hooks in React DevTools.
+
+    ```jsx
+    import { useDebugValue, useState } from "react";
+    function useCustomHook() {
+      const [value] = useState("Hello");
+      useDebugValue(value);
+      return value;
+    }
+    ```
+
+---
+
+## 3. Advanced React (Performance, SSR, Patterns, Real-World Scenarios)
+
+211. **How do you implement code splitting in a large React application?**
+
+
+    - Code splitting allows you to split your code into smaller bundles, which can then be loaded on demand. In React, you can use React.lazy and Suspense for component-level code splitting, and dynamic imports for other assets.
+
+    ```jsx
+    import React, { Suspense, lazy } from "react";
+    const Settings = lazy(() => import("./Settings"));
+    function App() {
+      return (
+        <Suspense fallback={<div>Loading...</div>}>
+          <Settings />
+        </Suspense>
+      );
+    }
+    ```
+
+212. **How do you handle memory leaks in React applications?**
+
+
+    - Memory leaks can occur if you forget to clean up subscriptions, timers, or event listeners. Always return a cleanup function in useEffect and unsubscribe in componentWillUnmount for class components.
+
+    ```jsx
+    useEffect(() => {
+      const id = setInterval(() => {/* ... */}, 1000);
+      return () => clearInterval(id);
+    }, []);
+    ```
+
+213. **How do you implement SSR (Server-Side Rendering) with React?**
+
+
+    - Use frameworks like Next.js or libraries like ReactDOMServer. SSR improves SEO and initial load performance by rendering HTML on the server.
+
+    ```js
+    // Example with ReactDOMServer
+    import ReactDOMServer from 'react-dom/server';
+    const html = ReactDOMServer.renderToString(<App />);
+    ```
+
+214. **How do you optimize React rendering for large lists?**
+
+
+    - Use windowing/virtualization libraries like react-window or react-virtualized to render only visible items, reducing DOM nodes and improving performance.
+
+    ```jsx
+    import { FixedSizeList as List } from 'react-window';
+    function MyList({ items }) {
+      return (
+        <List height={400} itemCount={items.length} itemSize={35} width={300}>
+          {({ index, style }) => <div style={style}>{items[index]}</div>}
+        </List>
+      );
+    }
+    ```
+
+215. **How do you implement error logging and monitoring in React apps?**
+
+
+    - Use error boundaries to catch errors, and integrate with monitoring tools like Sentry, LogRocket, or Bugsnag to log and track errors in production.
+
+    ```jsx
+    class ErrorBoundary extends React.Component {
+      componentDidCatch(error, info) {
+        // Send error to monitoring service
+      }
+      // ...
+    }
+    ```
+
+216. **How do you handle deep updates in nested state objects?**
+
+
+    - Use the spread operator or libraries like immer to immutably update deeply nested state.
+
+    ```jsx
+    import produce from 'immer';
+    const nextState = produce(state, draft => {
+      draft.user.profile.name = 'New Name';
+    });
+    ```
+
+217. **How do you implement feature flags in a React application?**
+
+
+    - Store feature flags in context, Redux, or use a service like LaunchDarkly. Conditionally render features based on flag values.
+
+    ```jsx
+    const FeatureContext = React.createContext({ newFeature: false });
+    function MyComponent() {
+      const { newFeature } = useContext(FeatureContext);
+      return newFeature ? <NewFeature /> : <OldFeature />;
+    }
+    ```
+
+218. **How do you implement a custom hook for debouncing a value?**
+
+
+    - Debouncing prevents a function from being called too frequently. A custom hook can use useEffect and setTimeout to debounce a value.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useDebounce(value, delay) {
+      const [debounced, setDebounced] = useState(value);
+      useEffect(() => {
+        const handler = setTimeout(() => setDebounced(value), delay);
+        return () => clearTimeout(handler);
+      }, [value, delay]);
+      return debounced;
+    }
+    ```
+
+219. **How do you implement a custom hook for fetching data with cancellation?**
+
+
+    - Use AbortController to cancel fetch requests if the component unmounts or the request is no longer needed.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useFetch(url) {
+      const [data, setData] = useState(null);
+      useEffect(() => {
+        const controller = new AbortController();
+        fetch(url, { signal: controller.signal })
+          .then(res => res.json())
+          .then(setData)
+          .catch(e => { if (e.name !== 'AbortError') throw e; });
+        return () => controller.abort();
+      }, [url]);
+      return data;
+    }
+    ```
+
+220. **How do you implement a custom hook for event listeners?**
+
+
+    - A custom hook can add and remove event listeners to any target (window, document, etc.) using useEffect.
+
+    ```jsx
+    import { useEffect } from 'react';
+    function useEventListener(event, handler, element = window) {
+      useEffect(() => {
+        element.addEventListener(event, handler);
+        return () => element.removeEventListener(event, handler);
+      }, [event, handler, element]);
+    }
+    ```
+
+221. **How do you implement a custom hook for throttling a value?**
+
+
+    - Throttling limits how often a function can run. A custom hook can use useRef and setTimeout to throttle updates.
+
+    ```jsx
+    import { useRef, useCallback } from 'react';
+    function useThrottle(callback, delay) {
+      const lastCall = useRef(0);
+      return useCallback((...args) => {
+        const now = Date.now();
+        if (now - lastCall.current > delay) {
+          lastCall.current = now;
+          callback(...args);
+        }
+      }, [callback, delay]);
+    }
+    ```
+
+222. **How do you implement a custom hook for previous state value?**
+
+
+    - Store the previous value in a ref and update it in useEffect.
+
+    ```jsx
+    import { useRef, useEffect } from 'react';
+    function usePrevious(value) {
+      const ref = useRef();
+      useEffect(() => { ref.current = value; }, [value]);
+      return ref.current;
+    }
+    ```
+
+223. **How do you implement a custom hook for toggling boolean state?**
+
+
+    - A simple custom hook to toggle a boolean value.
+
+    ```jsx
+    import { useState, useCallback } from 'react';
+    function useToggle(initial = false) {
+      const [value, setValue] = useState(initial);
+      const toggle = useCallback(() => setValue(v => !v), []);
+      return [value, toggle];
+    }
+    ```
+
+224. **How do you implement a custom hook for timeouts?**
+
+
+    - A custom hook to run a function after a delay.
+
+    ```jsx
+    import { useEffect, useRef } from 'react';
+    function useTimeout(callback, delay) {
+      const savedCallback = useRef(callback);
+      useEffect(() => { savedCallback.current = callback; }, [callback]);
+      useEffect(() => {
+        if (delay === null) return;
+        const id = setTimeout(() => savedCallback.current(), delay);
+        return () => clearTimeout(id);
+      }, [delay]);
+    }
+    ```
+
+// Duplicate removed: Custom hook for intervals (already covered in advanced section)
+
+// Duplicate removed: Custom hook for detecting clicks outside an element (already covered above)
+
+// Duplicate removed: Custom hook for localStorage (already covered in advanced section)
+
+228. **How do you implement a custom hook for geolocation?**
+
+
+    - Use the Geolocation API to get the user's location.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useGeolocation() {
+      const [position, setPosition] = useState(null);
+      useEffect(() => {
+        navigator.geolocation.getCurrentPosition(setPosition);
+      }, []);
+      return position;
+    }
+    ```
+
+229. **How do you implement a custom hook for online/offline status?**
+
+
+    - Listen for online/offline events and update state.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useOnlineStatus() {
+      const [online, setOnline] = useState(navigator.onLine);
+      useEffect(() => {
+        const handleOnline = () => setOnline(true);
+        const handleOffline = () => setOnline(false);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+          window.removeEventListener('online', handleOnline);
+          window.removeEventListener('offline', handleOffline);
+        };
+      }, []);
+      return online;
+    }
+    ```
+
+230. **How do you implement a custom hook for window scroll position?**
+
+
+    - Track the scroll position of the window.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useScrollPosition() {
+      const [position, setPosition] = useState(window.scrollY);
+      useEffect(() => {
+        const handleScroll = () => setPosition(window.scrollY);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+      return position;
+    }
+    ```
+
+231. **How do you implement a custom hook for device orientation?**
+
+
+    - Listen for device orientation events and update state.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useDeviceOrientation() {
+      const [orientation, setOrientation] = useState(window.orientation);
+      useEffect(() => {
+        const handler = () => setOrientation(window.orientation);
+        window.addEventListener('orientationchange', handler);
+        return () => window.removeEventListener('orientationchange', handler);
+      }, []);
+      return orientation;
+    }
+    ```
+
+232. **How do you implement a custom hook for detecting dark mode?**
+
+
+    - Use window.matchMedia to detect dark mode preference.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useDarkMode() {
+      const [isDark, setIsDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
+      useEffect(() => {
+        const mq = window.matchMedia('(prefers-color-scheme: dark)');
+        const handler = e => setIsDark(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+      }, []);
+      return isDark;
+    }
+    ```
+
+233. **How do you implement a custom hook for detecting element visibility?**
+
+
+    - Use the Intersection Observer API to detect if an element is visible in the viewport.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useOnScreen(ref) {
+      const [isIntersecting, setIntersecting] = useState(false);
+      useEffect(() => {
+        const observer = new window.IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting));
+        if (ref.current) observer.observe(ref.current);
+        return () => { if (ref.current) observer.unobserve(ref.current); };
+      }, [ref]);
+      return isIntersecting;
+    }
+    ```
+
+234. **How do you implement a custom hook for media queries?**
+
+
+    - Use window.matchMedia to respond to media query changes.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useMediaQuery(query) {
+      const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+      useEffect(() => {
+        const mq = window.matchMedia(query);
+        const handler = e => setMatches(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+      }, [query]);
+      return matches;
+    }
+    ```
+
+235. **How do you implement a custom hook for clipboard operations?**
+
+
+    - Use the Clipboard API to copy text to the clipboard.
+
+    ```jsx
+    function useCopyToClipboard() {
+      const copy = async text => {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          return false;
+        }
+      };
+      return copy;
+    }
+    ```
+
+236. **How do you implement a custom hook for form input management?**
+
+
+    - Manage form input state and handlers in a reusable hook.
+
+    ```jsx
+    import { useState } from 'react';
+    function useInput(initialValue) {
+      const [value, setValue] = useState(initialValue);
+      const onChange = e => setValue(e.target.value);
+      return { value, onChange };
+    }
+    ```
+
+237. **How do you implement a custom hook for API polling?**
+
+
+    - Poll an API endpoint at a regular interval.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useApiPolling(url, interval) {
+      const [data, setData] = useState(null);
+      useEffect(() => {
+        let isMounted = true;
+        const fetchData = () => fetch(url).then(res => res.json()).then(d => isMounted && setData(d));
+        fetchData();
+        const id = setInterval(fetchData, interval);
+        return () => { isMounted = false; clearInterval(id); };
+      }, [url, interval]);
+      return data;
+    }
+    ```
+
+238. **How do you implement a custom hook for focus management?**
+
+
+    - Manage focus on an element programmatically.
+
+    ```jsx
+    import { useRef } from 'react';
+    function useFocus() {
+      const ref = useRef();
+      const setFocus = () => ref.current && ref.current.focus();
+      return [ref, setFocus];
+    }
+    ```
+
+239. **How do you implement a custom hook for detecting window size?**
+
+
+    - Track the window's width and height.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useWindowSize() {
+      const [size, setSize] = useState([window.innerWidth, window.innerHeight]);
+      useEffect(() => {
+        const handleResize = () => setSize([window.innerWidth, window.innerHeight]);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+      }, []);
+      return size;
+    }
+    ```
+
+240. **How do you implement a custom hook for detecting network status?**
+
+
+    - Listen for online/offline events and update state accordingly.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useNetworkStatus() {
+      const [status, setStatus] = useState(navigator.onLine);
+      useEffect(() => {
+        const handleOnline = () => setStatus(true);
+        const handleOffline = () => setStatus(false);
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+        return () => {
+          window.removeEventListener('online', handleOnline);
+          window.removeEventListener('offline', handleOffline);
+        };
+      }, []);
+      return status;
+    }
+    ```
+
+241. **How do you implement a custom hook for detecting page visibility?**
+
+
+    - Use the Page Visibility API to detect if the page is visible or hidden.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function usePageVisibility() {
+      const [visible, setVisible] = useState(!document.hidden);
+      useEffect(() => {
+        const handleVisibility = () => setVisible(!document.hidden);
+        document.addEventListener('visibilitychange', handleVisibility);
+        return () => document.removeEventListener('visibilitychange', handleVisibility);
+      }, []);
+      return visible;
+    }
+    ```
+
+243. **How do you implement a custom hook for detecting battery status?**
+
+
+    - Use the Battery Status API to get battery information.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useBattery() {
+      const [battery, setBattery] = useState(null);
+      useEffect(() => {
+        navigator.getBattery().then(setBattery);
+      }, []);
+      return battery;
+    }
+    ```
+
+244. **How do you implement a custom hook for detecting pointer position?**
+
+
+    - Track the mouse or pointer position on the screen.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function usePointerPosition() {
+      const [pos, setPos] = useState({ x: 0, y: 0 });
+      useEffect(() => {
+        const handler = e => setPos({ x: e.clientX, y: e.clientY });
+        window.addEventListener('mousemove', handler);
+        return () => window.removeEventListener('mousemove', handler);
+      }, []);
+      return pos;
+    }
+    ```
+
+245. **How do you implement a custom hook for detecting key presses?**
+
+
+    - Listen for keydown events and update state when a specific key is pressed.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useKeyPress(targetKey) {
+      const [pressed, setPressed] = useState(false);
+      useEffect(() => {
+        const down = e => e.key === targetKey && setPressed(true);
+        const up = e => e.key === targetKey && setPressed(false);
+        window.addEventListener('keydown', down);
+        window.addEventListener('keyup', up);
+        return () => {
+          window.removeEventListener('keydown', down);
+          window.removeEventListener('keyup', up);
+        };
+      }, [targetKey]);
+      return pressed;
+    }
+    ```
+
+246. **How do you implement a custom hook for detecting scroll direction?**
+
+
+    - Track the direction of the user's scroll.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useScrollDirection() {
+      const [direction, setDirection] = useState(null);
+      useEffect(() => {
+        let lastY = window.scrollY;
+        const handler = () => {
+          setDirection(window.scrollY > lastY ? 'down' : 'up');
+          lastY = window.scrollY;
+        };
+        window.addEventListener('scroll', handler);
+        return () => window.removeEventListener('scroll', handler);
+      }, []);
+      return direction;
+    }
+    ```
+
+247. **How do you implement a custom hook for detecting resize events on an element?**
+
+
+    - Use the ResizeObserver API to detect when an element's size changes.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useResizeObserver(ref) {
+      const [size, setSize] = useState({ width: 0, height: 0 });
+      useEffect(() => {
+        if (!ref.current) return;
+        const observer = new ResizeObserver(([entry]) => {
+          setSize(entry.contentRect);
+        });
+        observer.observe(ref.current);
+        return () => observer.disconnect();
+      }, [ref]);
+      return size;
+    }
+    ```
+
+248. **How do you implement a custom hook for detecting network speed?**
+
+
+    - Use the Network Information API to get the effective network type and speed.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useNetworkSpeed() {
+      const [speed, setSpeed] = useState(null);
+      useEffect(() => {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (!connection) return;
+        const update = () => setSpeed(connection.effectiveType);
+        connection.addEventListener('change', update);
+        update();
+        return () => connection.removeEventListener('change', update);
+      }, []);
+      return speed;
+    }
+    ```
+
+249. **How do you implement a custom hook for detecting reduced motion preference?**
+
+
+    - Use window.matchMedia to detect if the user prefers reduced motion.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function usePrefersReducedMotion() {
+      const [prefers, setPrefers] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      useEffect(() => {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const handler = e => setPrefers(e.matches);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+      }, []);
+      return prefers;
+    }
+    ```
+
+250. **How do you implement a custom hook for detecting print mode?**
+
+
+    - Listen for beforeprint and afterprint events to detect when the page is being printed.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function usePrintMode() {
+      const [printing, setPrinting] = useState(false);
+      useEffect(() => {
+        const before = () => setPrinting(true);
+        const after = () => setPrinting(false);
+        window.addEventListener('beforeprint', before);
+        window.addEventListener('afterprint', after);
+        return () => {
+          window.removeEventListener('beforeprint', before);
+          window.removeEventListener('afterprint', after);
+        };
+      }, []);
+      return printing;
+    }
+    ```
+
+---
+
+## 4. Redux Form
+
+251. **What is Redux Form and why is it used in React applications?**
+
+
+    - Redux Form is a library for managing form state in Redux. It helps handle form validation, submission, and field state, making complex forms easier to manage in large React apps.
+
+252. **How does Redux Form integrate with Redux state?**
+
+
+    - Redux Form stores form data, errors, and field states in the Redux store, allowing global access and time-travel debugging.
+
+253. **How do you create a simple form using Redux Form?**
+
+
+    - Use the `reduxForm` HOC to wrap your form component and the `Field` component to render form fields.
+
+    ```jsx
+    import { reduxForm, Field } from 'redux-form';
+    function SimpleForm({ handleSubmit }) {
+      return (
+        <form onSubmit={handleSubmit}>
+          <Field name="username" component="input" type="text" />
+          <button type="submit">Submit</button>
+        </form>
+      );
+    }
+    export default reduxForm({ form: 'simple' })(SimpleForm);
+    ```
+
+254. **How do you perform synchronous validation in Redux Form?**
+
+
+    - Pass a `validate` function to the `reduxForm` config. It receives form values and returns an errors object.
+
+    ```js
+    const validate = values => {
+      const errors = {};
+      if (!values.username) errors.username = 'Required';
+      return errors;
+    };
+    export default reduxForm({ form: 'myForm', validate })(MyForm);
+    ```
+
+255. **How do you perform asynchronous validation in Redux Form?**
+
+
+    - Use the `asyncValidate` config and set `asyncBlurFields` to specify which fields trigger async validation.
+
+    ```js
+    const asyncValidate = values =>
+      fetch('/api/check-username', { method: 'POST', body: JSON.stringify({ username: values.username }) })
+        .then(res => res.json())
+        .then(data => { if (!data.available) throw { username: 'Username taken' }; });
+    export default reduxForm({ form: 'myForm', asyncValidate, asyncBlurFields: ['username'] })(MyForm);
+    ```
+
+256. **How do you handle form submission in Redux Form?**
+
+
+    - Pass an `onSubmit` handler to the form component. Redux Form injects a `handleSubmit` prop that you call with your submit logic.
+
+    ```jsx
+    function MyForm({ handleSubmit }) {
+      const submit = values => { /* submit logic */ };
+      return <form onSubmit={handleSubmit(submit)}>...</form>;
+    }
+    ```
+
+257. **How do you reset a form in Redux Form?**
+
+
+    - Use the `reset` prop injected by Redux Form, or dispatch the `reset` action creator.
+
+    ```jsx
+    function MyForm({ handleSubmit, reset }) {
+      return <button type="button" onClick={reset}>Reset</button>;
+    }
+    ```
+
+258. **How do you initialize form values in Redux Form?**
+
+
+    - Pass `initialValues` as a prop to the form component or map it from Redux state.
+
+    ```jsx
+    <MyForm initialValues={{ username: 'john' }} />
+    ```
+
+259. **How do you handle dynamic fields (arrays) in Redux Form?**
+
+
+    - Use the `FieldArray` component to manage dynamic form fields like lists or arrays.
+
+    ```jsx
+    import { FieldArray } from 'redux-form';
+    function RenderMembers({ fields }) {
+      return (
+        <div>
+          {fields.map((name, idx) => (
+            <Field name={`${name}.email`} component="input" key={idx} />
+          ))}
+          <button onClick={() => fields.push({})}>Add Member</button>
+        </div>
+      );
+    }
+    ```
+
+260. **How do you access form values and errors from Redux state?**
+
+
+    - Use the `formValueSelector` and `getFormSyncErrors` selectors from Redux Form.
+
+    ```js
+    import { formValueSelector, getFormSyncErrors } from 'redux-form';
+    const selector = formValueSelector('myForm');
+    const value = selector(state, 'username');
+    const errors = getFormSyncErrors('myForm')(state);
+    ```
+
+261. **How do you disable a submit button until the form is valid in Redux Form?**
+
+
+    - Use the `invalid` or `pristine` props injected by Redux Form.
+
+    ```jsx
+    function MyForm({ handleSubmit, invalid }) {
+      return <button type="submit" disabled={invalid}>Submit</button>;
+    }
+    ```
+
+262. **How do you show field-level validation errors in Redux Form?**
+
+
+    - Use the `meta` prop provided to the `Field` render function.
+
+    ```jsx
+    <Field name="email" component={({ input, meta }) => (
+      <div>
+        <input {...input} />
+        {meta.touched && meta.error && <span>{meta.error}</span>}
+      </div>
+    )} />
+    ```
+
+263. **How do you handle custom input components in Redux Form?**
+
+
+    - Pass a custom component to the `component` prop of `Field`.
+
+    ```jsx
+    function RenderInput({ input, meta }) {
+      return <input {...input} />;
+    }
+    <Field name="firstName" component={RenderInput} />
+    ```
+
+264. **How do you handle radio buttons and checkboxes in Redux Form?**
+
+
+    - Use the `type` prop on `Field` and handle checked/unchecked state.
+
+    ```jsx
+    <Field name="gender" component="input" type="radio" value="male" />
+    <Field name="gender" component="input" type="radio" value="female" />
+    <Field name="accept" component="input" type="checkbox" />
+    ```
+
+265. **How do you handle file uploads in Redux Form?**
+
+
+    - Use a custom component for file input and handle file selection in the `onChange` handler.
+
+    ```jsx
+    function FileInput({ input }) {
+      return <input type="file" onChange={e => input.onChange(e.target.files[0])} />;
+    }
+    <Field name="avatar" component={FileInput} />
+    ```
+
+266. **How do you handle form-level warnings in Redux Form?**
+
+
+    - Pass a `warn` function to the `reduxForm` config. It works like `validate` but for warnings.
+
+    ```js
+    const warn = values => {
+      const warnings = {};
+      if (!values.age) warnings.age = 'Age is recommended';
+      return warnings;
+    };
+    export default reduxForm({ form: 'myForm', warn })(MyForm);
+    ```
+
+267. **How do you handle nested fields in Redux Form?**
+
+
+    - Use dot notation in the `name` prop (e.g., `user.email`).
+
+    ```jsx
+    <Field name="user.email" component="input" />
+    ```
+
+268. **How do you handle conditional fields in Redux Form?**
+
+
+    - Conditionally render `Field` components based on form values or state.
+
+    ```jsx
+    {showExtra && <Field name="extra" component="input" />}
+    ```
+
+269. **How do you handle form submission errors in Redux Form?**
+
+
+    - Throw a `SubmissionError` in your submit handler to set form-level errors.
+
+    ```js
+    import { SubmissionError } from 'redux-form';
+    const submit = values => {
+      if (!values.email) throw new SubmissionError({ _error: 'Email required' });
+    };
+    ```
+
+270. **How do you handle loading and submitting states in Redux Form?**
+
+
+    - Use the `submitting` and `submitSucceeded` props injected by Redux Form.
+
+    ```jsx
+    function MyForm({ handleSubmit, submitting }) {
+      return <button disabled={submitting}>Submit</button>;
+    }
+    ```
+
+271. **How do you handle form reinitialization in Redux Form?**
+
+
+    - Set `enableReinitialize: true` in the config to update form values when `initialValues` changes.
+
+    ```js
+    export default reduxForm({ form: 'myForm', enableReinitialize: true })(MyForm);
+    ```
+
+272. **How do you persist form data across page reloads in Redux Form?**
+
+
+    - Use Redux Persist to persist the Redux store, including form state.
+
+273. **How do you handle cross-field validation in Redux Form?**
+
+
+    - In your `validate` function, compare values of different fields to validate relationships.
+
+    ```js
+    const validate = values => {
+      const errors = {};
+      if (values.password !== values.confirm) errors.confirm = 'Passwords must match';
+      return errors;
+    };
+    ```
+
+274. **How do you handle form arrays with validation in Redux Form?**
+
+
+    - Use `FieldArray` and validate each item in the array in your `validate` function.
+
+275. **How do you test Redux Form components?**
+
+
+    - Use Jest and React Testing Library. Test form rendering, field updates, and submission logic.
+
+276. **How do you customize field rendering in Redux Form?**
+
+
+    - Use a render function or custom component for the `component` prop of `Field`.
+
+277. **How do you handle form-level errors in Redux Form?**
+
+
+    - Use the `_error` property in the errors object returned by `validate` or thrown by `SubmissionError`.
+
+278. **How do you handle pristine and dirty states in Redux Form?**
+
+
+    - Use the `pristine` and `dirty` props injected by Redux Form to check if the form has been modified.
+
+279. **How do you handle focus and blur events in Redux Form?**
+
+
+    - Use the `onFocus` and `onBlur` handlers provided by the `input` prop in custom components.
+
+280. **How do you handle form destruction/unmounting in Redux Form?**
+
+
+    - By default, form state is destroyed on unmount. Set `destroyOnUnmount: false` to persist form state.
+
+    ```js
+    export default reduxForm({ form: 'myForm', destroyOnUnmount: false })(MyForm);
+    ```
+
+281. **How do you handle server-side validation errors in Redux Form?**
+
+
+    - Throw a `SubmissionError` with field errors from the server in your submit handler.
+
+282. **How do you handle form submission with side effects in Redux Form?**
+
+
+    - Dispatch Redux actions or call APIs in your submit handler.
+
+283. **How do you integrate Redux Form with other Redux state?**
+
+
+    - Use `connect` from `react-redux` to map additional state or actions to your form component.
+
+284. **How do you handle accessibility in Redux Form?**
+
+
+    - Use semantic HTML, ARIA attributes, and proper labeling in custom components.
+
+285. **How do you handle localization/internationalization in Redux Form?**
+
+
+    - Pass translated strings to field labels, placeholders, and error messages.
+
+286. **How do you handle form submission throttling/debouncing in Redux Form?**
+
+
+    - Use lodash's `throttle` or `debounce` in your submit handler or field-level validation.
+
+287. **How do you handle wizard/multi-step forms in Redux Form?**
+
+
+    - Use multiple form components with shared form name and manage step state in Redux or component state.
+
+288. **How do you migrate from Redux Form to Formik or React Hook Form?**
+
+
+    - Refactor forms to use new libraries, update validation logic, and replace Redux Form-specific APIs with equivalents.
+
+289. **How do you optimize performance in large Redux Form applications?**
+
+
+    - Use `shouldComponentUpdate`, avoid unnecessary re-renders, and split large forms into smaller components.
+
+290. **How do you handle custom field formatting/parsing in Redux Form?**
+
+
+    - Use the `format` and `parse` props on `Field` to transform values between the UI and Redux state.
+
+    ```jsx
+    <Field name="amount" component="input" format={value => value && value.toLocaleString()} parse={value => Number(value.replace(/,/g, ''))} />
+    ```
+
+291. **How do you handle dependent fields in Redux Form?**
+
+
+    - Use `formValueSelector` to get values of other fields and update dependent fields accordingly.
+
+292. **How do you handle form submission cancellation in Redux Form?**
+
+
+    - Provide a cancel button that resets or destroys the form state.
+
+293. **How do you handle large forms with hundreds of fields in Redux Form?**
+
+
+    - Use field-level components, lazy loading, and split forms into logical sections.
+
+294. **How do you handle form state debugging in Redux Form?**
+
+
+    - Use Redux DevTools to inspect form state, actions, and time-travel debugging.
+
+295. **How do you handle form state migration in Redux Form?**
+
+
+    - Write migration scripts to update persisted form state when form structure changes.
+
+296. **How do you handle form submission retries in Redux Form?**
+
+
+    - Implement retry logic in your submit handler and update form state accordingly.
+
+297. **How do you handle autosave in Redux Form?**
+
+
+    - Use `onChange` handlers or Redux middleware to save form data automatically as the user types.
+
+
+    - Track field changes, submission events, and errors using Redux middleware or analytics libraries.
+
+---
+
+## 5. React Core Concepts & TypeScript (Advanced & In-Depth)
+
+299. **What is JSX and how does it work under the hood?**
+
+
+    - JSX is a syntax extension for JavaScript that looks like HTML. It is compiled by Babel to `React.createElement` calls, which produce React elements (plain JS objects) that describe what should appear in the UI.
+
+    ```jsx
+    // JSX
+    const element = <h1>Hello, world!</h1>;
+    // Compiled to
+    const element = React.createElement('h1', null, 'Hello, world!');
+    ```
+
+300. **How does React's Virtual DOM work and why is it efficient?**
+
+
+    - The Virtual DOM is an in-memory representation of the real DOM. React updates the Virtual DOM first, then uses a diffing algorithm (reconciliation) to compute the minimal set of changes needed to update the real DOM, reducing expensive DOM operations.
+
+301. **Explain the reconciliation process in React.**
+
+
+    - Reconciliation is the process by which React updates the DOM. It compares the new Virtual DOM tree with the previous one, finds differences (diffing), and updates only the changed parts in the real DOM.
+
+302. **What are the differences between functional and class components? Why prefer functional components?**
+
+
+    - Functional components are plain JS functions, support hooks, and are easier to test and reason about. Class components use ES6 classes, have lifecycle methods, and are more verbose. Functional components are preferred for their simplicity and performance.
+
+303. **How do props and state differ in React?**
+
+
+    - Props are read-only data passed from parent to child. State is managed within a component and can change over time. Props are immutable by the child, state is mutable by the component.
+
+304. **How do you manage component lifecycle with hooks?**
+
+
+    - useEffect replaces lifecycle methods like componentDidMount, componentDidUpdate, and componentWillUnmount. You can use multiple useEffect hooks for different concerns.
+
+    ```jsx
+    useEffect(() => {
+      // componentDidMount logic
+      return () => {
+        // componentWillUnmount logic
+      };
+    }, []);
+    ```
+
+305. **What are controlled and uncontrolled components? Give examples.**
+
+
+    - Controlled components have their value managed by React state. Uncontrolled components use refs to access DOM values directly.
+
+    ```jsx
+    // Controlled
+    const [value, setValue] = useState('');
+    <input value={value} onChange={e => setValue(e.target.value)} />
+    // Uncontrolled
+    const inputRef = useRef();
+    <input ref={inputRef} />
+    ```
+
+306. **Why are keys important in React lists? What happens if you use the index as a key?**
+
+
+    - Keys help React identify which items have changed, are added, or are removed. Using indexes as keys can cause issues with component state and performance when the list order changes.
+
+307. **How does React handle rendering and re-rendering?**
+
+
+    - When state or props change, React re-renders the component and its children. It uses the Virtual DOM to efficiently update only the changed parts of the real DOM.
+
+308. **What are the rules of hooks?**
+
+
+    - Only call hooks at the top level of a function component or custom hook. Only call hooks from React function components or custom hooks. Never call hooks inside loops, conditions, or nested functions.
+
+309. **What are some common performance pitfalls with hooks?**
+
+
+    - Unnecessary re-renders due to missing or incorrect dependencies in useEffect/useCallback/useMemo, creating new functions/objects on every render, and not memoizing expensive calculations.
+
+310. **How do you memoize a component and why?**
+
+
+    - Use React.memo to prevent unnecessary re-renders of functional components when props haven't changed.
+
+    ```jsx
+    const MyComponent = React.memo(function MyComponent(props) { /* ... */ });
+    ```
+
+311. **How do you normalize state shape in Redux?**
+
+
+    - Store data in a flat structure, use IDs as keys, and avoid deeply nested objects. This makes updates and lookups efficient.
+
+312. **What is a Higher-Order Component (HOC) and when would you use one?**
+
+
+    - An HOC is a function that takes a component and returns a new component with enhanced behavior. Use HOCs for cross-cutting concerns like authentication, logging, or theming.
+
+    ```jsx
+    function withLogger(Wrapped) {
+      return function(props) {
+        useEffect(() => console.log(props));
+        return <Wrapped {...props} />;
+      };
+    }
+    ```
+
+313. **What is the render props pattern?**
+
+
+    - A technique where a component's child is a function that receives state/logic as arguments, allowing for code reuse.
+
+    ```jsx
+    <DataProvider render={data => <Display data={data} />} />
+    ```
+
+314. **What are compound components?**
+
+
+    - Compound components are a pattern where multiple components work together, sharing implicit state via context. Example: Tabs, Accordion.
+
+315. **How do you implement code splitting and lazy loading in React?**
+
+
+    - Use React.lazy and Suspense to load components only when needed.
+
+    ```jsx
+    const LazyComponent = React.lazy(() => import('./LazyComponent'));
+    <Suspense fallback={<div>Loading...</div>}>
+      <LazyComponent />
+    </Suspense>
+    ```
+
+316. **How do you implement dynamic routing and nested routes in React Router v6?**
+
+
+    - Use the `Routes` and `Route` components, and nest routes as children. Use `useParams` for dynamic segments.
+
+    ```jsx
+    <Routes>
+      <Route path="/users" element={<Users />}>
+        <Route path=":id" element={<UserDetail />} />
+      </Route>
+    </Routes>
+    ```
+
+317. **How do you protect routes in React Router?**
+
+
+    - Create a wrapper component that checks authentication and renders children or redirects.
+
+    ```jsx
+    function PrivateRoute({ children }) {
+      const isAuth = useAuth();
+      return isAuth ? children : <Navigate to="/login" />;
+    }
+    ```
+
+318. **How do you use TypeScript to type props and state in React components?**
+
+
+    - Use interfaces or types to define prop and state shapes, and annotate your component.
+
+    ```tsx
+    interface MyProps { name: string; age?: number; }
+    const MyComponent: React.FC<MyProps> = ({ name, age }) => <div>{name} {age}</div>;
+    ```
+
+319. **How do you use generics with React components and hooks in TypeScript?**
+
+
+    - Use generics to make components and hooks reusable for different types.
+
+    ```tsx
+    function useArray<T>(initial: T[]): [T[], (item: T) => void] {
+      const [arr, setArr] = useState(initial);
+      const add = (item: T) => setArr(a => [...a, item]);
+      return [arr, add];
+    }
+    ```
+
+320. **When should you use interfaces vs types in TypeScript React code?**
+
+
+    - Interfaces are best for object shapes and can be extended/merged. Types are more flexible (unions, primitives). For props/state, either works, but interfaces are preferred for public APIs.
+
+321. **How do you handle optional and default props in TypeScript?**
+
+
+    - Use `?` for optional props and default values in the function signature or defaultProps.
+
+    ```tsx
+    interface Props { label?: string }
+    const Button: React.FC<Props> = ({ label = 'Click' }) => <button>{label}</button>;
+    ```
+
+322. **How do you type event handlers in TypeScript React?**
+
+
+    - Use the correct event type, e.g., `React.ChangeEvent<HTMLInputElement>` for input change.
+
+    ```tsx
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+    ```
+
+323. **How do you type refs in TypeScript React?**
+
+
+    - Use `useRef<HTMLInputElement>(null)` for DOM refs, or `useRef<Type | null>(null)` for custom types.
+
+    ```tsx
+    const inputRef = useRef<HTMLInputElement>(null);
+    ```
+
+324. **How do you type children in TypeScript React components?**
+
+
+    - Use `children: React.ReactNode` in your props interface.
+
+    ```tsx
+    interface Props { children: React.ReactNode }
+    const Wrapper: React.FC<Props> = ({ children }) => <div>{children}</div>;
+    ```
+
+325. **How do you type a component that forwards refs in TypeScript?**
+
+
+    - Use `forwardRef` with generics for the ref type.
+
+    ```tsx
+    const Input = React.forwardRef<HTMLInputElement, Props>((props, ref) => <input ref={ref} {...props} />);
+    ```
+
+326. **How do you type a custom hook in TypeScript?**
+
+
+    - Use generics and return types for flexibility.
+
+    ```tsx
+    function useToggle(initial = false): [boolean, () => void] {
+      const [value, setValue] = useState(initial);
+      const toggle = () => setValue(v => !v);
+      return [value, toggle];
+    }
+    ```
+
+327. **How do you type a reducer function in TypeScript?**
+
+
+    - Define state and action types, and use them in the reducer signature.
+
+    ```tsx
+    type State = { count: number };
+    type Action = { type: 'inc' } | { type: 'dec' };
+    function reducer(state: State, action: Action): State { /* ... */ }
+    ```
+
+328. **How do you type context values in TypeScript?**
+
+
+    - Define an interface/type for the context value and pass it to `createContext`.
+
+    ```tsx
+    interface AuthContext { user: string; login: () => void }
+    const Auth = React.createContext<AuthContext | undefined>(undefined);
+    ```
+
+329. **How do you type a function that returns a React element in TypeScript?**
+
+
+    - Use `React.ReactElement` as the return type.
+
+    ```tsx
+    function renderLabel(): React.ReactElement { return <span>Label</span>; }
+    ```
+
+330. **How do you type a component that accepts generic props in TypeScript?**
+
+
+    - Use generics in the component definition.
+
+    ```tsx
+    type ListProps<T> = { items: T[]; render: (item: T) => React.ReactNode };
+    function List<T>({ items, render }: ListProps<T>) {
+      return <ul>{items.map(render)}</ul>;
+    }
+    ```
+
+---
+
+## 6. Additional Advanced Custom Hooks & Scenarios
+
+    - Track user activity and set idle state after a period of inactivity.
+
+    ```jsx
+    import { useState, useEffect } from 'react';
+    function useIdle(timeout = 1000 * 60) {
+      const [idle, setIdle] = useState(false);
+      useEffect(() => {
+        let timer;
+        const reset = () => {
+          setIdle(false);
+          clearTimeout(timer);
+          timer = setTimeout(() => setIdle(true), timeout);
+        };
+        window.addEventListener('mousemove', reset);
+        window.addEventListener('keydown', reset);
+        reset();
+        return () => {
+          window.removeEventListener('mousemove', reset);
+          window.removeEventListener('keydown', reset);
+          clearTimeout(timer);
+        };
+      }, [timeout]);
+      return idle;
+    }
+    ```

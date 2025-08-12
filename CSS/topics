@@ -1,0 +1,71 @@
+✅ CSS/SASS/SCSS Topics to Cover
+🔹 1. Core CSS Knowledge
+Box model (content, padding, border, margin)
+Positioning (static, relative, absolute, fixed, sticky)
+Flexbox (all properties for containers and items)
+CSS Grid layout (tracks, areas, line-based placement)
+Display types (block, inline, inline-block, none)
+Z-index and stacking context
+Media queries and responsive design
+Transitions and animations
+Pseudo-classes (:hover, :nth-child, etc.)
+Pseudo-elements (::before, ::after)
+Specificity, inheritance, and the cascade
+
+🔹 2. CSS Architecture & Methodologies
+BEM (Block Element Modifier) naming convention
+SMACSS, OOCSS (optional but good to know)
+Organizing large-scale CSS projects
+Avoiding global style pollution
+Modular CSS in React apps (e.g., CSS Modules)
+
+🔹 3. SASS / SCSS Features
+Nesting (and when not to overuse it)
+Variables and color palettes
+Mixins (reusable style patterns)
+Functions and operators
+Partials and imports (\_filename.scss)
+Extends and placeholders (%placeholder)
+Conditionals and loops (@if, @each, @for)
+Maps and lists
+Managing themes with SASS
+
+🔹 4. CSS in JS vs Preprocessors
+Pros and cons of using SASS/SCSS vs Styled-components, Emotion, or Tailwind
+Interoperability with CSS Modules and React
+Using SASS with build tools (Webpack/Vite config)
+
+🔹 5. Responsive Design & Layouts
+Mobile-first vs desktop-first
+Fluid typography and containers
+Breakpoint strategies
+Utility classes vs component-scoped styles
+CSS clamp, min(), max()
+
+🔹 6. CSS Performance & Optimization
+Reducing repaint and reflow
+Efficient selectors
+Minimizing CSS bundle size
+Critical CSS and lazy-loaded styles
+Avoiding !important
+
+🔹 7. Accessibility in Styling (a11y)
+Focus indicators
+Reduced motion support
+Contrast ratios and accessible color palettes
+Hidden content techniques (e.g., visually-hidden)
+
+🔹 8. Styling in React Ecosystem
+Using SCSS with Create React App or Vite
+Scoped styling with:
+CSS Modules
+Styled-components / Emotion
+Tailwind CSS (utility-first)
+Theming with CSS variables or SCSS maps
+Dynamic theming (light/dark mode)
+
+🎯 Interview Readiness Tips
+Be ready to debug layout issues live (e.g., why flex isn't working, overflow issues).
+Understand how to structure styles for large React apps.
+Be able to compare SASS/SCSS with CSS-in-JS approaches and explain tradeoffs.
+Know how to use media queries, mixins, and variables effectively in a design system.

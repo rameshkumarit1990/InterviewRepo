@@ -1,0 +1,94 @@
+
+1. **What is Angular?**
+   - Angular is a TypeScript-based open-source web application framework developed by Google. It is used to build single-page client applications using HTML and TypeScript.
+
+2. **What are components in Angular?**
+   - Components are the basic building blocks of Angular applications. Each component consists of an HTML template, a TypeScript class, and optional CSS styles. Components control a part of the user interface.
+
+3. **What is data binding in Angular?**
+   - Data binding is a mechanism to coordinate parts of a template with parts of a component. Angular supports one-way and two-way data binding.
+
+4. **What is dependency injection in Angular?**
+   - Dependency injection is a design pattern used to supply a component with its dependencies. Angular has a built-in dependency injection framework that improves modularity and testability.
+
+5. **What are directives in Angular?**
+   - Directives are special instructions in the DOM. Angular provides built-in directives like *ngIf, *ngFor, and you can also create custom directives to extend HTML's capabilities.
+
+6. **What is a module in Angular?**
+   - An Angular module is a container for a group of related components, directives, pipes, and services. The root module is usually called AppModule.
+
+7. **What is routing in Angular?**
+   - Routing allows navigation between different views or components in an Angular application. The Angular Router maps URLs to components.
+
+8. **What is a service in Angular?**
+   - A service is a class that contains business logic, data, or functions that can be shared across components. Services are typically injected into components using dependency injection.
+
+9. **What is Angular CLI?**
+   - Angular CLI (Command Line Interface) is a tool to initialize, develop, scaffold, and maintain Angular applications directly from a command shell.
+
+10. **What is two-way data binding?**
+    - Two-way data binding allows for automatic synchronization of data between the model and the view. In Angular, it is implemented using the ngModel directive.
+
+---
+
+**Advanced Angular Interview Questions (5+ Years Experience)**
+
+11. **What is Change Detection in Angular and how does it work?**
+    - Change Detection is the mechanism by which Angular determines what parts of the UI need to be updated when the application state changes. Angular uses zones and the NgZone service to detect changes and runs change detection on the component tree. Strategies like Default and OnPush can be used to optimize performance.
+
+12. **Explain the difference between Template-driven and Reactive Forms.**
+    - Template-driven forms are defined in the template using directives, suitable for simple forms. Reactive forms are defined in the component class using FormControl and FormGroup, providing more control, validation, and scalability for complex forms.
+
+13. **What are Observables and how are they used in Angular?**
+    - Observables are a core part of RxJS and are used for handling asynchronous data streams. In Angular, they are commonly used with HTTP requests, event handling, and reactive forms.
+
+14. **How do you optimize the performance of a large Angular application?**
+    - Techniques include using OnPush change detection, lazy loading modules, trackBy in ngFor, AOT compilation, code splitting, tree shaking, and minimizing the use of watchers and listeners.
+
+15. **What is Ahead-of-Time (AOT) compilation?**
+    - AOT compilation converts Angular HTML and TypeScript code into efficient JavaScript code during the build phase, before the browser downloads and runs the code. This improves performance and reduces the size of the application.
+
+16. **What is lazy loading and how is it implemented in Angular?**
+    - Lazy loading is a technique to load feature modules only when they are needed, reducing the initial load time. It is implemented using the Angular Router's loadChildren property in route configuration.
+
+17. **How do you create and use custom pipes?**
+    - Custom pipes are created by implementing the PipeTransform interface and using the @Pipe decorator. They are used to transform data in templates.
+
+18. **What is the purpose of the Angular Universal?**
+    - Angular Universal is used for server-side rendering (SSR) of Angular applications, improving SEO, load time, and performance for users on slow connections.
+
+19. **How do you handle state management in Angular?**
+    - State management can be handled using services, RxJS, or libraries like NgRx, Akita, or NGXS for larger applications. These libraries provide a predictable state container and help manage complex state interactions.
+
+20. **What are decorators in Angular? Name a few commonly used ones.**
+    - Decorators are functions that add metadata to classes, properties, or methods. Common Angular decorators include @Component, @NgModule, @Injectable, @Input, and @Output.
+
+21. **What is the difference between Subject, BehaviorSubject, and ReplaySubject in RxJS?**
+    - Subject is a multicast observable that emits to multiple subscribers. BehaviorSubject holds the latest value and emits it to new subscribers. ReplaySubject can replay a specified number of previous values to new subscribers.
+
+22. **How do you implement route guards in Angular?**
+    - Route guards like CanActivate, CanDeactivate, CanLoad, etc., are implemented by creating classes that implement the respective interfaces and returning true/false or an Observable/Promise. They are used to control navigation based on authentication, permissions, or other logic.
+
+23. **What is the Angular Renderer2 and why would you use it?**
+    - Renderer2 is a service for safely manipulating DOM elements, attributes, and classes in a platform-independent way. It is used to ensure compatibility with server-side rendering and Web Workers.
+
+24. **Explain the use of ngZone and how it can be used to optimize performance.**
+    - NgZone is a service that helps Angular know when to trigger change detection. By running code outside Angular's zone (using runOutsideAngular), you can avoid unnecessary change detection cycles and improve performance.
+
+25. **What is the difference between ViewChild and ContentChild?**
+    - ViewChild is used to access a child component, directive, or DOM element from the same component's template. ContentChild is used to access projected content from ng-content.
+
+26. **How do you handle memory leaks in Angular applications?**
+    - Memory leaks can be prevented by unsubscribing from Observables, detaching event listeners, and cleaning up resources in ngOnDestroy lifecycle hook.
+
+27. **What is the difference between pure and impure pipes?**
+    - Pure pipes are executed only when their input values change. Impure pipes are executed on every change detection cycle, which can impact performance.
+
+28. **How do you use dynamic component loading in Angular?**
+    - Dynamic components can be loaded using ViewContainerRef and ComponentFactoryResolver, allowing you to create and insert components at runtime.
+
+29. **What is the Injector hierarchy in Angular?**
+    - Angular has a hierarchical dependency injection system. Providers can be registered at different levels (root, module, component), affecting the scope and lifetime of the service instances.
+
+30. **How do you internationalize (i18n) an Angular application?**
+    - Angular provides built-in support for internationalization using the i18n attribute, translation files, and the Angular CLI. Third-party libraries like ngx-translate can also be used for dynamic translations.

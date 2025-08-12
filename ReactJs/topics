@@ -1,0 +1,94 @@
+1. React Core Concepts
+   JSX and rendering mechanisms
+
+Virtual DOM and reconciliation
+Functional vs class components (focus on functional)
+Props vs state
+Component lifecycle (with Hooks)
+Controlled vs uncontrolled components
+Keys in lists and their role
+
+✅ 2. React Hooks (in-depth)
+useState, useEffect, useRef, useMemo, useCallback, useReducer
+Rules of Hooks
+Custom Hooks (how and when to use them)
+Performance pitfalls with Hooks (e.g., useEffect misuse)
+
+✅ 3. State Management
+React Context API: use cases, limitations
+Redux
+Redux middleware like Thunk, Saga
+Best practices for scalable state architecture
+Normalizing state shape
+
+✅ 4. Component Architecture & Reusability
+Smart (container) vs dumb (presentational) components
+Higher-Order Components (HOC)
+Render props pattern
+Compound components pattern
+Code splitting and lazy loading
+
+✅ 5. Routing
+React Router (v6+): dynamic routes, nested routing
+Route protection (auth guards)
+Redirects and programmatic navigation
+
+✅ 6. Performance Optimization
+Memoization (React.memo, useMemo, useCallback)
+Lazy loading components (React.lazy, Suspense)
+Windowing / list virtualization (react-window, react-virtualized)
+Avoiding unnecessary re-renders
+Profiling React apps using DevTools
+
+✅ 7. Testing
+Unit testing with Jest
+Component testing with React Testing Library
+Mocking APIs and Redux store
+End-to-end testing basics (e.g., Cypress, Playwright)
+
+✅ 8. TypeScript with React
+Type-safe props and state
+Generics with components and hooks
+Using interfaces vs types
+Handling optional and default props
+
+✅ 9. Styling Solutions
+CSS Modules
+Styled-components / Emotion
+Tailwind CSS
+BEM methodology
+Responsive design practices
+
+✅ 10. API Integration
+Fetching data using Axios, fetch, or GraphQL
+Debouncing and throttling in UI
+Handling loading, error, and empty states
+Caching strategies (e.g., SWR, React Query)
+
+✅ 11. Frontend Architecture
+Folder structure and code organization
+Feature-based modules
+Atomic design principles
+Monorepo vs multi-repo basics
+Micro frontends (if applicable)
+
+✅ 12. Build Tools & Ecosystem
+Webpack, Vite, or Create React App (CRA)
+Babel and transpilation basics
+ESLint + Prettier setup
+CI/CD workflows for front-end
+
+✅ 13. Soft Skills / System Design
+Communication with backend teams
+Explaining tradeoffs (e.g., state management choice)
+Breaking down features into tasks
+Estimation and prioritization
+Designing scalable UIs and reusable components
+
+✅ 14. Bonus (Advanced Topics)
+Server-side rendering (Next.js)
+Static site generation
+Internationalization (i18n)
+Accessibility (a11y)
+Security (XSS, CSRF in React apps)
+WebSockets / real-time updates

@@ -1,0 +1,558 @@
+# JavaScript Interview Questions and Answers(Grouped by Topic)
+
+---
+
+## Core JavaScript Concepts(Fundamentals)
+
+1. ** What are the different data types in JavaScript ?**
+
+  - JavaScript has primitive types: string, number, boolean, null, undefined, symbol, bigint; and objects(including arrays, functions, etc.).
+   - Example:
+
+```js
+   let a = undefined; // undefined
+   let b = null; // null
+   let c = Symbol("id"); // symbol
+   let d = 42; // number
+   let e = "hello"; // string
+   let f = true; // boolean
+   let g = 9007199254740991n; // bigint
+   let h = { x: 1 }; // object
+   ```
+
+2. ** Explain value vs reference in JavaScript(primitives vs objects).**
+
+  - Primitives(string, number, boolean, null, undefined, symbol, bigint) are copied by value.Objects(arrays, functions, objects) are copied by reference.
+   - Example:
+
+```js
+   let x = 5;
+   let y = x;
+   y = 10;
+   // x is still 5
+
+   let arr1 = [1];
+   let arr2 = arr1;
+   arr2.push(2);
+   // arr1 is now [1, 2] because arr2 is a reference to arr1
+   ```
+
+3. ** What is hoisting in JavaScript ?**
+
+  - Hoisting is JavaScript's default behavior of moving declarations to the top of the current scope before code execution. Only declarations are hoisted, not initializations.
+    - Example:
+
+```js
+   console.log(a); // undefined
+   var a = 10;
+   // let/const are hoisted but not initialized:
+   // console.log(b); // ReferenceError
+   // let b = 20;
+   ```
+
+4. ** Explain scoping in JavaScript(function, block, lexical scope).**
+
+  - Function scope: variables declared with var are scoped to the function.
+- Block scope: let /const are scoped to the nearest block (e.g., inside if, for, etc.).
+   - Lexical scope: inner functions have access to variables of their outer(parent) functions.
+   - Example:
+
+```js
+   function outer() {
+     let a = 1;
+     function inner() {
+       console.log(a); // 1 (lexical scope)
+     }
+     inner();
+   }
+   outer();
+   ```
+
+5. ** What is a closure ? Give a use case (e.g., private variables).**
+
+  - A closure is a function that remembers its outer(enclosing) variables even after the outer function has finished executing.Useful for data privacy.
+   - Example:
+
+  ```js
+   function makeCounter() {
+     let count = 0;
+     return function () {
+       return ++count;
+     };
+   }
+   const counter = makeCounter();
+   counter(); // 1
+   counter(); // 2
+   ```
+
+6. ** How does the 'this' keyword behave in different contexts ?**
+
+  - In global scope: refers to the global object(window in browsers) in non - strict mode, undefined in strict mode.
+   - In a method: refers to the object before the dot.
+   - In arrow functions: inherits 'this' from the enclosing scope(lexical this).
+   - In event handlers: refers to the element that received the event.
+   - Example:
+
+```js
+   const obj = {
+     value: 42,
+     regular: function () {
+       return this.value;
+     },
+     arrow: () => this.value
+   };
+   obj.regular(); // 42
+   obj.arrow(); // undefined (or window.value)
+   ```
+
+7. ** What are prototypes and the prototype chain in JavaScript ?**
+
+  - Every object in JavaScript has a prototype.Objects inherit properties and methods from their prototype.The prototype chain is the series of links between objects and their prototypes.
+   - Example:
+
+```js
+   let arr = [];
+   arr.__proto__ === Array.prototype; // true
+   Array.prototype.__proto__ === Object.prototype; // true
+   ```
+
+8. ** Explain the event loop, call stack, task queue, and microtasks.**
+
+  - Call stack: where JS code is executed, one frame at a time.
+   - Event loop: checks if the call stack is empty, then pushes tasks from the queue.
+   - Task queue(macrotasks): setTimeout, setInterval, etc.
+   - Microtasks: Promises, MutationObserver callbacks; run before macrotasks.
+   - Example:
+
+```js
+   console.log("A");
+   setTimeout(() => console.log("B"), 0);
+   Promise.resolve().then(() => console.log("C"));
+   console.log("D");
+   // Output: A D C B
+   ```
+
+9. ** How does JavaScript handle memory management ? What are memory leaks ?**
+
+  - JavaScript uses automatic garbage collection to reclaim memory that is no longer referenced.
+   - Memory leaks can occur if references to unused objects are unintentionally retained(e.g., via closures, global variables, detached DOM nodes).
+   - Example:
+
+```js
+   // Example of a memory leak:
+   let theLeakingArray = [];
+   function addToLeakingArray(element) {
+     theLeakingArray.push(element);
+   }
+   // If addToLeakingArray is called repeatedly with new elements, and theLeakingArray is never cleared, memory usage grows.
+   ```
+
+---
+
+## 1. Core JavaScript Fundamentals
+
+1. ** What are the different data types in JavaScript ?**
+
+  - JavaScript has primitive types: string, number, boolean, null, undefined, symbol, bigint; and objects.
+   - Example:
+
+```js
+   let a = undefined,
+     b = null,
+     c = Symbol("id");
+   ```
+
+2. ** Explain value vs reference in JavaScript.**
+
+  - Primitives(string, number, etc.) are copied by value; objects / arrays / functions are copied by reference.
+   - Example:
+
+```js
+   let x = 5,
+     y = x;
+   y = 10; // x is still 5
+   let arr1 = [1],
+     arr2 = arr1;
+   arr2.push(2); // arr1 is [1,2]
+   ```
+
+3. ** What is hoisting ?**
+
+  - Variable and function declarations are moved to the top of their scope before code execution.
+   - Example:
+
+```js
+   console.log(a); // undefined
+   var a = 10;
+   ```
+
+4. ** Explain scoping in JavaScript.**
+
+  - Function scope: variables declared with var are scoped to the function.
+- Block scope: let /const are scoped to the nearest block.
+- Lexical scope: inner functions have access to variables of outer functions.
+
+5. ** What is a closure ? Give a use case.**
+
+  - A closure is a function that remembers its outer variables even after the outer function has executed.
+   - Use case: private variables.
+   - Example:
+
+```js
+   function makeCounter() {
+     let count = 0;
+     return function () {
+       return ++count;
+     };
+   }
+   const counter = makeCounter();
+   counter(); // 1
+   counter(); // 2
+   ```
+
+6. ** How does 'this' behave in different contexts ?**
+
+  - In global: window(non - strict), undefined(strict).
+   - In method: object before dot.
+   - In arrow functions: lexical(from outer scope).
+   - In event handlers: element.
+
+7. ** What is the prototype chain ?**
+
+  - Objects inherit from other objects via the prototype chain. `Object.getPrototypeOf(obj)`.
+   - Example:
+
+```js
+   let arr = [];
+   arr.__proto__ === Array.prototype; // true
+   ```
+
+8. ** Explain the event loop, call stack, and microtasks.**
+
+  - Call stack: executes code.
+
+9. ** What’s the difference between == and ===? Why is one preferred ?**
+  - `==` compares values with type coercion; `===` compares value and type. `===` is preferred for predictability.
+
+---
+
+### Section 2: Advanced JavaScript Concepts
+
+11. ** How does JavaScript's prototypal inheritance work?**
+
+  - Objects inherit properties from their prototype.The prototype chain is followed until a property is found or null is reached.
+    - Example:
+
+```js
+    function Animal() {}
+    Animal.prototype.speak = function () {
+      return "sound";
+    };
+    const dog = new Animal();
+    dog.speak(); // 'sound'
+    ```
+
+  - Example:
+
+```js
+    class Emitter {
+      constructor() {
+        this.events = {};
+      }
+      on(event, fn) {
+        (this.events[event] = this.events[event] || []).push(fn);
+      }
+      emit(event, ...args) {
+        (this.events[event] || []).forEach((fn) => fn(...args));
+      }
+      off(event, fn) {
+        this.events[event] = (this.events[event] || []).filter((f) => f !== fn);
+      }
+    }
+    ```
+
+12. ** Explain the concept of memoization and implement a memoized function.**
+
+  - Memoization caches results of expensive function calls.
+- Example:
+
+```js
+    function memoize(fn) {
+      const cache = {};
+      return (...args) => {
+        const key = JSON.stringify(args);
+        if (!(key in cache)) cache[key] = fn(...args);
+        return cache[key];
+      };
+    }
+    ```
+
+13. ** How do you handle race conditions in async JavaScript code ?**
+
+  - Use abort controllers, track request tokens, or ignore out - of - order responses.
+    - Example:
+
+```js
+    let latest = 0;
+    async function fetchData(id) {
+      const req = ++latest;
+      const data = await fetch(`/ api / ${ id } `).then((r) => r.json());
+      if (req === latest) return data;
+    }
+    ```
+
+14. ** What is a Proxy in JavaScript and give a real - world use case?**
+
+  - Proxy allows custom behavior for fundamental operations.
+    - Example: Logging property access.
+
+    ```js
+    const obj = new Proxy(
+      {},
+      {
+        get(target, prop) {
+          console.log("get", prop);
+          return target[prop];
+        }
+      }
+    );
+    ```
+
+15. ** How would you implement deep cloning of objects(without JSON methods) ?**
+
+  - Use recursion and handle arrays, objects, and edge cases.
+    - Example:
+
+```js
+    function deepClone(obj) {
+      if (obj === null || typeof obj !== "object") return obj;
+      if (Array.isArray(obj)) return obj.map(deepClone);
+      const copy = {};
+      for (let key in obj) copy[key] = deepClone(obj[key]);
+      return copy;
+    }
+    ```
+
+16. ** Explain debouncing and throttling in the context of React hooks.**
+
+  - Use`useRef`, `useEffect`, and timers to debounce / throttle state updates or API calls.
+
+17. ** How do you secure sensitive data in a frontend JavaScript application ?**
+
+  - Never expose secrets in JS.Use environment variables, server - side proxies, and HTTPS.
+
+18. ** What is a Service Worker and how can it be used for offline support ?**
+
+  - Service Workers intercept network requests, cache assets, and enable offline experiences(PWA).
+
+19. ** How would you implement code splitting in a large SPA ?**
+
+  - Use dynamic imports, React.lazy / Suspense, or Webpack's splitChunks.
+    - Example:
+
+```js
+    const LazyComp = React.lazy(() => import("./Comp"));
+    ```
+
+20. ** What are WeakMap and WeakSet ? When would you use them ?**
+
+  - Store object keys without preventing garbage collection.Use for caching or private data in classes.
+
+21. ** How do you prevent XSS in a React application ?**
+
+  - Never use `dangerouslySetInnerHTML` with untrusted data.Use libraries like DOMPurify.
+
+22. ** How would you design a plugin architecture in JavaScript ?**
+
+  - Use event emitters, dependency injection, or expose plugin hooks / callbacks.
+
+23. ** What is the difference between micro frontends and monolithic SPAs ?**
+
+  - Micro frontends split UI into independently deployable apps; monolithic SPA is a single codebase.
+
+24. ** How do you handle large lists efficiently in the DOM ?**
+
+  - Use windowing / virtualization(e.g., react - window), lazy rendering, and recycling DOM nodes.
+
+25. ** How do you implement a retry mechanism for failed API calls ?**
+
+  - Use recursion or loops with delays.
+    - Example:
+
+```js
+    async function fetchWithRetry(url, retries = 3) {
+      try {
+        return await fetch(url);
+      } catch (e) {
+        if (retries) return fetchWithRetry(url, retries - 1);
+        throw e;
+      }
+    }
+    ```
+
+26. ** What is the difference between SSR, SSG, and CSR ?**
+
+  - SSR : Server - side rendering.SSG: Static site generation.CSR: Client - side rendering.Each has trade - offs for SEO, performance, and interactivity.
+
+27. ** How do you profile and optimize JavaScript performance in production ?**
+
+  - Use browser DevTools, Lighthouse, code splitting, lazy loading, and monitor with analytics / APM tools.
+
+28. ** How do you handle circular references in objects(e.g., for serialization)?**
+
+  - Use custom replacers in JSON.stringify or libraries like flatted.
+    - Example:
+
+```js
+    function safeStringify(obj) {
+      const seen = new WeakSet();
+      return JSON.stringify(obj, (k, v) => {
+        if (typeof v === "object" && v !== null) {
+          if (seen.has(v)) return;
+          seen.add(v);
+        }
+        return v;
+      });
+    }
+    ```
+
+29. ** What are Observables and how do they differ from Promises ?**
+
+  - Observables(RxJS) can emit multiple values over time, are cancellable, and support operators; Promises resolve once.
+
+30. ** How do you implement a custom hook in React for data fetching ?**
+
+  - Example :
+
+  ```js
+    import { useState, useEffect } from "react";
+    function useFetch(url) {
+      const [data, setData] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState(null);
+      useEffect(() => {
+        setLoading(true);
+        fetch(url)
+          .then((r) => r.json())
+          .then(setData)
+          .catch(setError)
+          .finally(() => setLoading(false));
+      }, [url]);
+      return { data, loading, error };
+    }
+    ```
+
+31. ** How do you architect a large - scale JavaScript application for maintainability ?**
+
+  - Use modular code, clear folder structure, separation of concerns, dependency injection, and automated tests.
+
+---
+
+🔹 Section 1: Core JavaScript(Behavioral & Conceptual)
+What is the difference between undefined and null ? When would you use each ?
+
+  Explain how this works in JavaScript.
+
+How is it different in an arrow function vs a regular function?
+
+What is the difference between let, const, and var?
+
+  What are closures, and how have you used them in a real project ?
+
+    Can you explain event delegation and why it’s useful ?
+
+      How does JavaScript handle asynchronous code ?
+
+        Explain the event loop in simple terms.
+
+What is the difference between shallow and deep copy ? How would you implement a deep copy in JavaScript ?
+
+  What’s the difference between == and ===? Why is one preferred ?
+
+🔹 Section 2: Advanced JavaScript Concepts
+How does JavaScript's prototypal inheritance work?
+
+What are Promises, and how do they compare to async / await ?
+
+  What is debouncing vs throttling ? Can you write a simple debounce function?
+
+How does the map() function differ from forEach() ?
+
+  What is a memory leak in JavaScript and how do you prevent it in React apps ?
+
+    What are pure functions and why are they important in functional programming ?
+
+      Explain optional chaining and nullish coalescing.When would you use each ?
+
+🔹 Section 3: Real - World Scenarios
+You have a form with 10 inputs.How would you manage their state in a scalable way in React ?
+
+  How do you ensure a component is performant when it’s rendering large lists ?
+
+    You need to build a theme switcher(dark / light mode).Would you use CSS variables, context, or something else?Why ?
+
+      How would you cache API results in the front - end to avoid unnecessary requests ?
+
+        You're given a legacy React app using class components. How would you approach refactoring to hooks?
+
+🔹 Section 4: Code Challenges(Live or Take - home style)
+
+1. Debounce Function
+js
+Copy
+Edit
+function debounce(fn, delay) {
+  // Implement this
+}
+2. Flatten Nested Array
+js
+Copy
+Edit
+flatten([1, [2, [3, 4], 5]]); // Output: [1, 2, 3, 4, 5]
+3. Deep Clone Object(without lodash)
+js
+Copy
+Edit
+const cloneDeep = (obj) => {
+  // Your implementation here
+};
+4. Custom bind Function
+js
+Copy
+Edit
+Function.prototype.myBind = function (context, ...args) {
+  // Implement custom bind
+};
+5. Promise.all Polyfill
+js
+Copy
+Edit
+function promiseAll(promises) {
+  // Implement your own version
+}
+   🔹 Section 5: Debugging / Code Reading
+You’re shown a snippet like this:
+
+js
+Copy
+Edit
+const person = {
+  name: 'Alex',
+  greet() {
+    setTimeout(function () {
+      console.log(`Hello, ${this.name}`);
+    }, 1000);
+  },
+};
+
+person.greet(); // What's the output and why?
+Follow - up: How would you fix it ?
+
+🔹 Behavioral / System Design Questions(for senior roles)
+Tell me about a time you improved a performance issue in a React app.
+
+Have you ever implemented a reusable component library ? How did you structure it ?
+
+  How do you collaborate with designers or backend engineers ?
+
+    Have you mentored junior developers ? How did you approach it ?

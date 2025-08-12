@@ -1,0 +1,120 @@
+✅ 1. Core JavaScript Fundamentals
+Data types (undefined, null, symbol, etc.)
+Value vs reference (primitives vs objects)
+Hoisting
+Scoping (function, block, lexical scope)
+Closures and use cases (e.g., private variables)
+The this keyword in different contexts
+Prototypes and prototype chain
+Event loop, call stack, task queue, and microtasks
+Memory management (garbage collection basics, memory leaks)
+
+✅ 2. ES6+ Features (in-depth)
+Arrow functions and lexical this
+Destructuring (arrays & objects)
+Spread and rest operators
+Default, named, and dynamic imports
+Template literals
+let, const, var (differences & temporal dead zone)
+Modules (import / export)
+Optional chaining (?.), nullish coalescing (??)
+for...of, for...in, Object.entries, etc.
+
+✅ 3. Functions and Functional Programming
+Higher-order functions
+Pure functions and side effects
+Closures and currying
+Function composition
+Debounce and throttle
+bind, call, apply
+Immutability best practices
+
+✅ 4. Asynchronous JavaScript
+Promises (creation, chaining, error handling)
+async/await (including try/catch/finally)
+Promise combinators (Promise.all, allSettled, race, any)
+Event loop and task queues (microtasks vs macrotasks)
+Error handling in async functions
+Avoiding callback hell
+Real-world use: fetching data with async/await and handling loading states
+
+✅ 5. Arrays & Objects (Mastery)
+Array methods: map, filter, reduce, find, some, every, flat, sort, splice, slice
+Object manipulation: Object.assign, spread syntax, Object.entries, Object.keys, Object.values
+Deep vs shallow copy
+Cloning and merging strategies
+Mutating vs non-mutating methods
+
+✅ 6. DOM Manipulation & Events
+(Even if using React, you're expected to understand the underlying DOM)
+Selecting elements (querySelector, etc.)
+Adding/removing classes and attributes
+Creating/removing elements
+Event delegation and bubbling
+Custom events
+Prevent default vs stop propagation
+Debouncing scroll or input events
+
+✅ 7. Error Handling & Debugging
+try...catch, finally
+Throwing custom errors
+Using the browser debugger, breakpoints
+Logging best practices
+Source maps in minified code
+
+✅ 8. Performance Optimization
+Avoiding reflows and repaints
+Lazy loading, code splitting
+Debounce/throttle
+Memory leaks and how to detect them
+Efficient array/object handling
+Event delegation to reduce listeners
+
+✅ 9. Coding Practices & Patterns
+DRY, KISS, YAGNI
+Composition over inheritance
+Revealing module pattern
+Singleton pattern
+Factory functions
+Observables vs Promises (basic awareness)
+Clean Code principles
+
+✅ 10. Security Fundamentals
+XSS (Cross-site scripting) – how JS can cause it, and how to prevent
+CSRF (basic concept)
+Avoiding eval, innerHTML, etc.
+
+✅ 11. Tooling and Ecosystem
+ESLint and Prettier
+Babel (what it does, how it helps)
+Webpack basics or Vite (how bundling works)
+Transpilation vs polyfill
+NPM/Yarn – package management, scripts, semantic versioning
+
+✅ 12. Testing & Debugging
+Writing testable functions (pure functions)
+Mocks and spies (with Jest)
+DOM testing with tools like React Testing Library
+Unit vs integration testing
+
+✅ 13. TypeScript (if used)
+Types vs interfaces
+Type inference
+Generics
+Union/intersection types
+Type narrowing (typeof, in, instanceof)
+Type guards
+
+🔥 BONUS: Advanced Concepts (Optional but Impressive)
+Generators and Iterators
+Proxies and Reflect API
+Web Workers
+Service Workers
+Symbol, WeakMap, WeakSet
+Memoization
+Dynamic imports / tree shaking
+
+🧠 Practice & Interview Prep
+Practice coding challenges on: LeetCode, Codewars, Frontend Mentor
+Practice explaining your solutions and tradeoffs out loud
+Be ready to write small JS utilities (e.g., deep clone, debounce, flatten array)
